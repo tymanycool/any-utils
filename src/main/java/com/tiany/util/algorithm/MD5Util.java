@@ -14,7 +14,7 @@ public class MD5Util {
 	 * @throws NoSuchAlgorithmException
 	 * @throws IllegalArgumentException
 	 */
-	public static String checkMD5(String originalString)
+	public static String md5(String originalString)
 			throws UnsupportedEncodingException, NoSuchAlgorithmException, IllegalArgumentException {
 		byte[] signedOriginalStringBytes = MessageDigest.getInstance("MD5").digest(originalString.getBytes("UTF-8"));
 		String signedOriginalString = new HexBinaryAdapter().marshal(signedOriginalStringBytes);
