@@ -1,4 +1,4 @@
-package com.tiany.util.file;
+package com.tiany.util.io;
 
 import java.io.*;
 import java.nio.channels.FileChannel;
