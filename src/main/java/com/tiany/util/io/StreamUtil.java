@@ -8,7 +8,7 @@ import java.io.*;
  * @author tianyao
  *
  */
-public class StreamUtils {
+public class StreamUtil {
 	/**
 	 * 输入流转化成string
 	 * @param is
