@@ -8,11 +8,8 @@ import java.security.NoSuchAlgorithmException;
 public class MD5Util {
 	/**
 	 * MD5加密
-	 * @param originalString
-	 * @return
-	 * @throws UnsupportedEncodingException
-	 * @throws NoSuchAlgorithmException
-	 * @throws IllegalArgumentException
+	 * @param originalString 加密前的字符串
+	 * @return 加密之后的字符串
 	 */
 	public static String md5(String originalString) {
 		String signedOriginalString = null;
