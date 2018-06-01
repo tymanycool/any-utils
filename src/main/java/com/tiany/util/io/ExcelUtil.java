@@ -121,9 +121,9 @@ public class ExcelUtil {
 	 * @param lists
 	 *            待导出的数据
 	 * @param columnNameMaping
-	 *            字段的名字与描述
+	 *            字段的名字与描述 eg. columnNameMaping.put("age","年龄")
 	 * @param sheetName
-	 * @param sheetSize
+	 * @param sheetSize eg. -1
 	 * @param out
 	 * @return
 	 */
