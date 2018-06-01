@@ -67,7 +67,7 @@ public class ExcelUtil {
 	 * @return
 	 * @throws Exception
 	 */
-	public static List<String> getCol(File file, int colIndex) throws Exception {
+	public static List<String> getColumn(File file, int colIndex) throws Exception {
 
 		XSSFWorkbook wb = new XSSFWorkbook(new FileInputStream(file));
 		int numberOfSheets = wb.getNumberOfSheets();
@@ -97,21 +97,97 @@ public class ExcelUtil {
 	 * 得到表格中的一列的数据
 	 * 
 	 * @param file
-	 * @param colName
+	 * @param columnName
 	 * @return
 	 * @throws Exception
 	 */
-	public static List<String> getCol(File file, String colName) throws Exception {
+	public static List<String> getColumn(File file, String columnName) throws Exception {
 
 		List<String> row = getRow(file,0);
 		int index = 0;
 		for(;index <= row.size();index++){
-			if(row.get(index).equals(colName)){
+			if(row.get(index).equals(columnName)){
 				break;
 			}
 		}
-		List<String> col = getCol(file,index);
+		List<String> col = getColumn(file,index);
 
 		return new ArrayList<String>(col.subList(1,col.size()));
+	}
+
+	/**
+	 * 导出Excel(2003及以下版本)
+	 *
+	 * @param lists
+	 *            待导出的数据
+	 * @param columnNameMaping
+	 *            字段的名字与描述
+	 * @param sheetName
+	 * @param sheetSize
+	 * @param out
+	 * @return
+	 */
+	@SuppressWarnings("deprecation")
+	public static boolean exportExcel(List<Map<String, Object>> lists, Map<String, String> columnNameMaping,
+									  String sheetName, int sheetSize, OutputStream out) {
+		HSSFWorkbook workbook = new HSSFWorkbook();// 产生工作薄对象
+
+		// excel2003中每个sheet中最多有65536行,为避免产生错误所以加这个逻辑.
+		if (sheetSize > 65536 || sheetSize < 1) {
+			sheetSize = 65536;
+		}
+
+		double sheetNo = Math.ceil(lists.size() / sheetSize);// 取出一共有多少个sheet.
+		for (int index = 0; index <= sheetNo; index++) {
+			HSSFSheet sheet = workbook.createSheet();// 产生工作表对象
+			if (sheetNo == 0) {
+				workbook.setSheetName(index, sheetName);
+			} else {
+				workbook.setSheetName(index, sheetName + index);// 设置工作表的名称.
+			}
+			HSSFRow row;
+			HSSFCell cell;// 产生单元格
+
+			row = sheet.createRow(0);// 产生一行
+			// 写入各个字段的列头名称
+			Iterator<Entry<String, String>> header = columnNameMaping.entrySet().iterator();
+			int i = 0;
+			while (header.hasNext()) {
+				cell = row.createCell(i);// 创建列
+				cell.setCellType(HSSFCell.CELL_TYPE_STRING);// 设置列中写入内容为String类型
+				Entry<String, String> next = header.next();
+				cell.setCellValue(next.getValue());// 写入列名
+				i++;
+			}
+
+			int startNo = index * sheetSize;
+			int endNo = Math.min(startNo + sheetSize, lists.size());
+
+			// 写入各条记录,每条记录对应excel表中的一行
+			for (i = startNo; i < endNo; i++) {
+				row = sheet.createRow(i + 1 - startNo);
+				Map vo = lists.get(i); // 得到导出对象.
+				header = columnNameMaping.entrySet().iterator();
+				int j = 0;
+				while (header.hasNext()) {
+					cell = row.createCell(j);// 创建cell
+					cell.setCellType(HSSFCell.CELL_TYPE_STRING);
+					Entry<String, String> next = header.next();
+					String value = String.valueOf(vo.get(next.getKey()));
+					cell.setCellValue("null".equals(value) ? "" : value);// 如果数据存在就填入,不存在填入空格.
+					j++;
+				}
+			}
+
+		}
+		try {
+			out.flush();
+			workbook.write(out);
+			out.close();
+			return true;
+		} catch (IOException e) {
+			e.printStackTrace();
+			return false;
+		}
 	}
 }
