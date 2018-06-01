@@ -7,7 +7,10 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MapUtil {
+/**
+ * Map工具类
+ */
+public abstract class MapUtil {
 
     public static Map<String, Object> transBean2Map(Object obj) {
 
