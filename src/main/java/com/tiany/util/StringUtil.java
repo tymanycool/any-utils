@@ -707,12 +707,13 @@ public class StringUtil extends StringUtils {
         Not.notEnpty(str);
         str = str.toLowerCase();
         String[] split = str.split("[-,_]");
-        String ret ="";
+        String ret = "";
         for (int i = 0; i < split.length; i++) {
             ret += split[i].substring(0, 1).toUpperCase() + split[i].substring(1);
         }
         return ret;
     }
+
     /**
      * eg.
      * last_name--->lastName
@@ -742,15 +743,9 @@ public class StringUtil extends StringUtils {
      */
     public static String substringUntil(String str, int beginIndex, Condition w) {
         StringBuilder sb = new StringBuilder();
-        for (int i = beginIndex; i< str.length(); i++) {
-            if(i+1 >= str.length()) {
-                if (w.matches(str.charAt(i), null)) {
-                    break;
-                }
-            }else {
-                if (w.matches(str.charAt(i), str.charAt(i + 1))) {
-                    break;
-                }
+        for (int i = beginIndex; i < str.length(); i++) {
+            if (w.matches(str.charAt(i), i + 1 == str.length() ? null : str.charAt(i + 1))) {
+                break;
             }
             sb.append(str.charAt(i));
         }
