@@ -743,8 +743,7 @@ public class StringUtil extends StringUtils {
     public static String substringUntil(String str, int beginIndex, Condition w) {
         StringBuilder sb = new StringBuilder();
         for (int i = beginIndex; i< str.length(); i++) {
-            sb.append(str.charAt(i));
-            if(i+1 == str.length()) {
+            if(i+1 >= str.length()) {
                 if (w.matches(str.charAt(i), null)) {
                     break;
                 }
@@ -753,6 +752,7 @@ public class StringUtil extends StringUtils {
                     break;
                 }
             }
+            sb.append(str.charAt(i));
         }
         return sb.toString();
     }
