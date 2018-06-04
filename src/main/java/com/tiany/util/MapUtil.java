@@ -1,18 +1,22 @@
 package com.tiany.util;
 
+import org.dom4j.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 /**
  * Map工具类
  */
 public abstract class MapUtil {
+
+    private static final Logger logger = LoggerFactory.getLogger(MapUtil.class);
+
     /**
      * map中是否包含key(忽略大小写)
      * @param map
@@ -46,7 +50,12 @@ public abstract class MapUtil {
         return false;
     }
 
-    public static Map<String, Object> transBean2Map(Object obj) {
+    /**
+     * Bean转换成Map
+     * @param obj
+     * @return
+     */
+    public static Map<String, Object> bean2Map(Object obj) {
 
         if (obj == null) {
             return null;
@@ -73,5 +82,53 @@ public abstract class MapUtil {
             throw new RuntimeException("Bean转换Map出错了!!!",e);
         }
         return map;
+    }
+
+
+    /**
+     * 解析2层xml
+     * @param map
+     * @param node
+     * @return
+     */
+    private static  Map<String,Object> getNodes(Map<String,Object> map,Element node){
+        map.put(node.getName(), node.getTextTrim());
+        List<Attribute> listAttr=node.attributes();//当前节点的所有属性的list
+        for(Attribute attr:listAttr){//遍历当前节点的所有属性
+            String name=attr.getName();//属性名称
+            String value=attr.getValue();//属性的值
+            logger.debug("属性名称："+name+"属性值："+value);
+        }
+
+        //递归遍历当前节点所有的子节点
+        List<Element> listElement=node.elements();//所有一级子节点的list
+        for(Element e:listElement){//遍历所有一级子节点
+            getNodes(map,e);//递归
+        }
+        return map;
+    }
+
+    /**
+     * 将xml转换成map对象
+     * @param xmlStr
+     * @return
+     */
+    public static Map<String,Object> xml2Map(String xmlStr){
+        if (null == xmlStr || "".equals(xmlStr)) {
+            return null;
+        }
+        Map<String,Object> map = new HashMap<String,Object>();
+
+        try {
+            // 将xml格式的字符串转换成Document对象
+            Document doc = DocumentHelper.parseText(xmlStr);
+            Element root=doc.getRootElement();//获取根节点
+            getNodes(map,root);//从根节点开始遍历所有节点
+            return map;
+        } catch (DocumentException e) {
+            e.printStackTrace();
+            logger.error("将xml转换成map对象转换失败！！！");
+        }
+        return null;
     }
 }
