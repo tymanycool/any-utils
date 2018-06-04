@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.datatransfer.*;
 import java.io.IOException;
 
-public class ClipboardUtil {
+public abstract class ClipboardUtil {
 	/**
 	 * 从剪切板获得图片
 	 */

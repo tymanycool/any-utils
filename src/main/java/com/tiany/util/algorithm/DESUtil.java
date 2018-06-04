@@ -3,7 +3,7 @@ package com.tiany.util.algorithm;
 /**
  * DES加密工具类
  */
-public class DESUtil {
+public abstract class DESUtil {
     /**
      * 使用默认密钥进行DES加密
      */

@@ -13,7 +13,7 @@ import java.lang.reflect.*;
  * 
  * @author tianyao
  */
-public class ReflectUtil {
+public abstract class ReflectUtil {
     
     private static final String SETTER_PREFIX         = "set";
     

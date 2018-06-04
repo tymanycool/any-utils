@@ -5,7 +5,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import java.util.Map;
 
-public class JsonUtil {
+public abstract class JsonUtil {
+    /**
+     * 对象转json字符串
+     * @param obj
+     * @return
+     */
     public static String obj2Json(Object obj) {
         String ret = null;
         try {

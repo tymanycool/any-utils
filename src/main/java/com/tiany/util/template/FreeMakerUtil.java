@@ -8,7 +8,7 @@ import freemarker.template.Template;
 import java.io.*;
 import java.util.Map;
 
-public class FreeMakerUtil {
+public abstract class FreeMakerUtil {
 	
 	private static final int MAX_SIZE = 1024*1024*10;//10M
 	

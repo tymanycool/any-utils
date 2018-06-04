@@ -2,7 +2,7 @@ package com.tiany.util;
 
 import com.tiany.exception.NotSupportException;
 
-public class BitUtil {
+public abstract class BitUtil {
 	/**
 	 * 返回index位上的二进制数值 :false表示0,true表示1
 	 * 

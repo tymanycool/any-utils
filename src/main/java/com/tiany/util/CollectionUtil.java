@@ -5,7 +5,7 @@ import com.tiany.inf.Condition;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CollectionUtil {
+public abstract class CollectionUtil {
     /**
      * 数组arr中是否包含ch
      * @param arr

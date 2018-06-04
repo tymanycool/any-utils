@@ -3,7 +3,7 @@ package com.tiany.util;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 
-public class IPUtil {
+public abstract class IPUtil {
     /**
      * 得到本机计算机的名称
      * @return

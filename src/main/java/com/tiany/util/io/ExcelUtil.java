@@ -27,7 +27,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
  * @author tWX508286
  *
  */
-public class ExcelUtil {
+public abstract class ExcelUtil {
 	/**
 	 * 得到表格中的一行的数据
 	 * 

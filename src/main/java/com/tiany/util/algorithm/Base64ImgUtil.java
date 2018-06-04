@@ -10,7 +10,7 @@ import java.net.URL;
 /**
  * 图片Base64编码工具
  */
-public class Base64ImgUtil {
+public abstract class Base64ImgUtil {
 	
     /** 
      * @Title: GetImageStrFromUrl 

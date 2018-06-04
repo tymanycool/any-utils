@@ -1,6 +1,6 @@
 package com.tiany.util.format;
 
-public class FormatUtil {
+public abstract class FormatUtil {
     /**
      * 增加缩进
      * @param str

@@ -5,7 +5,7 @@ import com.tiany.util.DateUtil;
 import java.io.*;
 import java.util.Properties;
 
-public class PropertiesUtil {
+public abstract class PropertiesUtil {
 	
 	public static String getProperty(String filePath,String key){
 		File file = new File(filePath);

@@ -8,7 +8,7 @@ import com.tiany.exception.NotSupportException;
  * @author tianyao
  *
  */
-public class MathUtil {
+public abstract class MathUtil {
 	/**
 	 * 比较两个double是否相等:|d1-d2|<=precision
 	 * 

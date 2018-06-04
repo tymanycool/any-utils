@@ -5,7 +5,7 @@ import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
-public class MD5Util {
+public abstract class MD5Util {
 	/**
 	 * MD5加密
 	 * @param originalString 加密前的字符串

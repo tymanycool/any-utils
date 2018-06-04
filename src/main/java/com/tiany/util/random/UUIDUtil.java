@@ -7,7 +7,7 @@ import java.util.UUID;
  * @author tWX508286
  *
  */
-public class UUIDUtil {
+public abstract class UUIDUtil {
 	/**
 	 * 获取UUID，去掉其中的'-'
 	 * @return 去掉其中的'-'的UUID

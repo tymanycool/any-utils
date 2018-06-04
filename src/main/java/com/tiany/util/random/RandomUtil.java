@@ -1,6 +1,6 @@
 package com.tiany.util.random;
 
-public class RandomUtil {
+public abstract class RandomUtil {
 
 	/**
 	 * 在【min,max】中随机生成一位数字

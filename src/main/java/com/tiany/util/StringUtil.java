@@ -11,7 +11,7 @@ import java.util.StringTokenizer;
  *
  * @author tianyao
  */
-public class StringUtil extends StringUtils {
+public abstract class StringUtil extends StringUtils {
 
     /**
      * 判断一个字符串是否为空
