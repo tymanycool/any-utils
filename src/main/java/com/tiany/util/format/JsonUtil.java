@@ -6,8 +6,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Map;
 
 public class JsonUtil {
-    public static String obj2Json(Object obj) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.writeValueAsString(obj);
+    public static String obj2Json(Object obj) {
+        String ret = null;
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            ret = objectMapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e.getMessage(),e);
+        }
+        return ret;
     }
 }
