@@ -4,6 +4,8 @@ public class Body{
     String name;
     String content;
 
+    User user = new User();
+
     public String getName() {
         return name;
     }
@@ -18,6 +20,14 @@ public class Body{
 
     public void setContent(String content) {
         this.content = content;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     @Override

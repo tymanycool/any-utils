@@ -12,6 +12,9 @@ import java.util.*;
 
 /**
  * Map工具类
+ * @author tianyao
+ * @version 1.0
+ * @since 1.0
  */
 public abstract class MapUtil {
 
@@ -51,37 +54,62 @@ public abstract class MapUtil {
     }
 
     /**
-     * Bean转换成Map
+     * Bean转换成Map(list类型不做处理，相同的key只保留一个)
      * @param obj
      * @return
      */
     public static Map<String, Object> bean2Map(Object obj) {
-
         if (obj == null) {
             return null;
         }
-        Map<String, Object> map = new HashMap<>();
         try {
-            BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
-            PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
-
-            for (PropertyDescriptor property : propertyDescriptors) {
-                String key = property.getName();
-
-                // 过滤class属性
-                if (!key.equals("class")) {
-                    // 得到property对应的getter方法
-                    Method getter = property.getReadMethod();
-                    Object value = getter.invoke(obj);
-
-                    map.put(key, value);
-                }
-
-            }
+            return  bean2Map(obj,obj.getClass());
         }catch (Exception e) {
             throw new RuntimeException("Bean转换Map出错了!!!",e);
         }
-        return map;
+    }
+
+    private static Map bean2Map(Object obj, Class<?> cls) throws Exception{
+        if (obj == null) {
+            return null;
+        }
+        Map<String, Object> retMap = new HashMap<>();
+        Class<?> superClas = cls.getSuperclass();
+        // 是否有具有父类，不包含Object
+        if (superClas != null && !superClas.equals(Object.class)) {
+            Map map = bean2Map(obj, superClas);
+            if(map != null){
+                retMap.putAll(map);
+            }
+        }
+        BeanInfo beanInfo = Introspector.getBeanInfo(obj.getClass());
+        PropertyDescriptor[] propertyDescriptors = beanInfo.getPropertyDescriptors();
+
+        for (PropertyDescriptor property : propertyDescriptors) {
+            String key = property.getName();
+            // 过滤class属性
+            if (!key.equals("class")) {
+                // 得到property对应的getter方法
+                Method getter = property.getReadMethod();
+                Class<?> propertyType = property.getPropertyType();
+                Object value = getter.invoke(obj);
+                if(ReflectUtil.isBasicType(propertyType)){
+                    if(value != null){
+                        retMap.put(key, value);
+                    }
+                }else if(value instanceof List){
+                    if(value != null){
+                        retMap.put(key, value);
+                    }
+                }else {
+                    Map map = bean2Map(value, value.getClass());
+                    if(map != null){
+                        retMap.putAll(map);
+                    }
+                }
+            }
+        }
+        return retMap;
     }
 
 
@@ -109,7 +137,7 @@ public abstract class MapUtil {
     }
 
     /**
-     * 将xml转换成map对象
+     * 将xml转换成map对象(相同的key只保留一个)
      * @param xmlStr
      * @return
      */

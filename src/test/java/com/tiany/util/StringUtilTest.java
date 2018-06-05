@@ -24,4 +24,12 @@ public class StringUtilTest {
 
     }
 
+    @Test
+    public void escape() throws Exception {
+        String escape = StringUtil.escape("田耀\"\t");
+        System.out.println(escape);
+        String str = "\u7530\u8000\"\t";
+        System.out.println(StringUtil.unescape(str));
+
+    }
 }

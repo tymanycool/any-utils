@@ -50,7 +50,7 @@ public class JsonUtilTest {
     @Test
     public void xml2json() throws Exception {
         String test = "";
-        test += "<html>";
+        test += "<Html>";
         test += "<header>             \r\n";
         test += "\t\t<meta>test</meta>";
         test += "<meta>test1</meta>";
@@ -60,7 +60,7 @@ public class JsonUtilTest {
         test += "<body>";
         test += "</body>";
         test += "<meta3>test3</meta3>";
-        test += "</html>";
+        test += "</Html>";
 
         String s = JsonUtil.xml2Json(test);
         System.out.println(s);
