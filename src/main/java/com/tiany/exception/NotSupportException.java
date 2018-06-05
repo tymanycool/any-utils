@@ -5,29 +5,22 @@ package com.tiany.exception;
  *
  */
 public class NotSupportException extends RuntimeException {
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	/**
-	 * 使用null作为不支持异常的初始信息
-	 */
-	public NotSupportException(){
-		super();
+	public NotSupportException() {
 	}
-	/**
-	 * 构造不支持该操作的异常：NotSupportException
-	 * @param info 异常的详细信息
-	 */
-	public NotSupportException(String info){
-		super(info);
+
+	public NotSupportException(String message) {
+		super(message);
 	}
-	/**
-	 * 构造不支持该操作的异常：NotSupportException
-	 * @param info 异常的详细信息
-	 * @param cause 产生异常的原因
-	 */
-	public NotSupportException(String info, String cause){
-		super(info,new Throwable(cause));
+
+	public NotSupportException(String message, Throwable cause) {
+		super(message, cause);
+	}
+
+	public NotSupportException(Throwable cause) {
+		super(cause);
+	}
+
+	public NotSupportException(String message, Throwable cause, boolean enableSuppression, boolean writableStackTrace) {
+		super(message, cause, enableSuppression, writableStackTrace);
 	}
 }
