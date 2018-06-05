@@ -3,14 +3,10 @@ package com.tiany.util.format;
 import com.tiany.util.format.xml.Header;
 import com.tiany.util.format.xml.Request;
 import com.tiany.util.format.xml.User;
-import org.json.XML;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.Assert.*;
-
 
 
 public class XmlUtilTest {
@@ -38,8 +34,9 @@ public class XmlUtilTest {
         header.setSign("sign2");
         request.getListHeader().add(header);
         String s = XmlUtil.bean2Xml(request);
-        String s2 = XmlUtil.bean2Xml(request);
-        System.out.println(s.equals(s2));
+        String s2 = XmlUtil.obj2Xml(request);
+        System.out.println(s);
+        System.out.println(s2);
     }
 
     @Test
@@ -70,6 +67,16 @@ public class XmlUtilTest {
         System.out.println(test2);
     }
 
+    @Test
+    public void obj2Xml2() throws Exception {
+        Request request2 = new Request();
+        request2.getHeader().setReqId("reqid_test");
+        request2.getHeader().setSign("token");
+        request2.getBody().setName("tianyao");
+        request2.getBody().setContent("business params");
+        String s = XmlUtil.obj2Xml2(request2);
+        System.out.println(s);
+    }
     @Test
     public void obj2Xml() throws Exception {
         Request request2 = new Request();

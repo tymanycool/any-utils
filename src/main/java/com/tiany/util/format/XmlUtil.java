@@ -1,5 +1,8 @@
 package com.tiany.util.format;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import com.tiany.util.ReflectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,11 +28,26 @@ public abstract class XmlUtil {
 
     /**
      * 将对象直接转换成String类型的 XML输出
+     * @param obj
+     * @return
+     */
+    public static String obj2Xml(Object obj){
+        try {
+            ObjectMapper mapper = new XmlMapper();
+            return mapper.writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        return "";
+    }
+
+    /**
+     * 将对象直接转换成String类型的 XML输出
      * 实体类需要加@XmlRootElement
      * @param obj
      * @return
      */
-    public static String obj2Xml(Object obj) {
+    public static String obj2Xml2(Object obj) {
         // 创建输出流
         StringWriter sw = new StringWriter();
         try {
