@@ -47,7 +47,7 @@ import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.ssl.SSLContextBuilder;
 import org.apache.http.util.EntityUtils;
 
-public class HttpUtil {
+public abstract class HttpUtil {
 
     /**
      * HTTP请求方法GET
@@ -412,20 +412,5 @@ public class HttpUtil {
         }
 
         return buffer.toString();
-    }
-
-    public static void main(String[] args)
-            throws Exception {
-//        String url = "http://183.63.131.106:40015/extServiceTest/ghbExtService.do";
-//        HashMap<String, String> params = new HashMap<String, String>();
-//        params.put("RequestData",
-//            "001X12          00000256007EBBCDB25833D2690F0F41A22E3EF7AF9692276C648978483BB077F2DF840BCBCE066597BE63663335149857F1234CC3C3F7F2D2C9CC8FE241556077DFA26B0C18B25140F34DE33ACC27C3F239A3532905C784BCA35A3B5E498A1256FC0C7B231D998BC394C078DCBDDE8B01967927B27735700CCA1457536461088F822A17<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\"?><Document>    <header>        <channelCode>P2P041</channelCode>        <channelDate>20160722</channelDate>        <channelFlow>HT0000000113</channelFlow>        <channelTime>104100</channelTime>        <encryptData></encryptData>    </header>    <body>        <TRANSCODE>OGW00042</TRANSCODE>        <XMLPARA>cQyo4VujX2nHtlEl/5KVhKAudz6W5W0WkBLVSRCR/0FYi9HVdqbB6omT0l//wcJeJHfRO1TBfFvIpAnRbOc4c/P3/MXfX98pz3cUj7V7yCjI0HcwMbapx2pdl36+Rd4yESYS90lYfyEaVF7wxUk7M4Gxge7b3kpwESYS90lYfyEPOWe865M02K+PywQhBywrAlRE778eDN6dn/rZe/Dr6z+Gzgj1rQWgA3knDb9G8e5H42P7xa74FTEx97IeWRsXGFkVrHtRWEV4iEJjEmc1LWCaPm1ZepeCRUQykq1S2qJ1WDKW9dX+2Bd1UDxh3OJETOXqbFb0lljDWvmJK6DmYvGHwhNVnal6j3gjW+3jwdbbjaI3DzcGVL5biPZB8fr23WgeTYDS44fHo5Dv3kmfr41bwUTT8k+zQ5EVxrcTj2hUXUcoPyVsPM16KfXiKeksswtvfPrCK6g+KE16uWupvyUbFLKBGBXsEv9amZ8AvkuN7kfNSPAf5Rhk7AnoTgTI</XMLPARA>    </body></Document>");
-//        params.put("transCode", "OGW00042");
-//        System.out.println(http(url, params));
-        String url = "http://127.0.0.1:8080/api/hx/accBack";
-
-        //  String data = "001X11          0000025697802B053FA4A627ECCC1295C298C01A9F16864F5E7520F4EC9AB79E154B26CBA3892473285D68836E0B5663FECF3B963C55CABBEB04A31A27A3351C8DEB23AD9DA548400CF151E2BC3651BDFB0AC5DACBCCDCA7970F4E54EDDB3100AFD97991321E49B8DD11BDCE4528723A1893EC53281FB790EBC3C0E8680C7A9C466F6CE6<?xml version=\"1.0\" encoding=\"UTF-8\"?><Document><header><channelCode>GHB</channelCode><channelFlow>OGW01201612235bh8YG</channelFlow><channelDate>20161223</channelDate><channelTime>111033</channelTime><encryptData></encryptData></header><body><MERCHANTID>BDJ</MERCHANTID><BANKID>GHB</BANKID><TRANSCODE>OGWR0005</TRANSCODE><XMLPARA>hHL14pfeZcvvNj1H9aST963wcIcHDSlcjgsBtho9jWP38R4MGtfUUQAhqPTU41tIMgUlRkVf7KvkaTbxqIJxp2IN+9+zQ5a6OpSccgqZO62nTrQ220MjIVDE7LRb3LOs8/ehf3uQ3l11BC1f+212vfEx3YNTVeZjQYe+je6IznW6HC6sQq3bdA==</XMLPARA></body></Document>";
-        String data = "001X11          00000256BB1C72252B0D50403B5E47AE3E095952CBA66884205DFE9B47BBDA502D9A4414855759579F5FBC0980E561D31DD10F5399D331AFEA3D07A8AD150896E5F533297A4AEE0AEFBB60BFE306B082F2A6B6FE14D98C4785A4B1AD347F766E24C9E7E952F049ACAF45C48E4D52220495376D28436F645F335B90659697C4B9FD11BC9F<?xml version=\"1.0\" encoding=\"UTF-8\"?><Document><header><channelCode>GHB</channelCode><channelFlow>OGW01201803141005731910</channelFlow><channelDate>20180314</channelDate><channelTime>142923</channelTime><encryptData></encryptData></header><body><TRANSCODE>OGW00252</TRANSCODE><XMLPARA>nCB52FjrvYxgs9oeOd4bqlKhR4BjXXzzwGP/FpPykpD4Jwc+s/FkJU6f2L8A9mALXpgj+d+zKRCkNRQCjEZyu45DhovhlCFCJxbxCFgTtSBxF8qbmk1nsjAZ2eh5g6VrvrypPmt0BKgYhLPVme1ehDdpyCHmQ1fn43Ug705jbdeDa9reU7mJKWCxoD3AF/B43xW8YdA4gvxH76L+Qd/hsoP37AQmh9c1RQwFwl/QetxblemhZfP+SYOWFjoteJ3Fhk5a+FTI7wWqqNBSjiaYT/QlNYcD5Kbi+tlrKfTZpxtOV8HixhTJTwY97ui57e8emxKOjsUpVmziMAhSNq6ZZEQvsw9BdiEp3cjIytXjwVpQcAIzeLemS0x+T25ZAtlfYDllDsPyEC6YSCugDcIOTr5hC22zX07dC4XC3he8woKz8aEl8PuYCd7cVPbl0YRXC4XC3he8woJl5QLzCTGhlEfo01f9wpu4bCMawK4PMb6lGnbXp92KkkGHlIA6QVb8kBQUszFv00IN9isICGeZ6415/EV9obUpLhkft18tMYY2F9rHA49AnF73TCZklloB8co8meSKi7Ng1T/h7Dq6cDFBWEFn0dS0Vo3YBUBVhNNX+vK/ujPCWA==</XMLPARA></body></Document>";
-        HttpUtil.post(true, url, data, null);
     }
 }
