@@ -3,7 +3,7 @@ package com.tiany.util.format;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-public class GsonUtil {
+public abstract class GsonUtil {
 	public static Gson gson = new Gson();
 	public static Gson gsonWithDate = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
 
