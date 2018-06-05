@@ -8,11 +8,8 @@ import java.io.*;
  * @author tianyao
  *
  */
-public class CloneUtil {
+public abstract class CloneUtil {
 
-	private CloneUtil() {
-		throw new AssertionError();
-	}
 
 	/**
 	 * 通过序列化与反序列化得到一个对象的副本（深复制）

@@ -6,12 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public class FileUtil {
-	/**
-	 * 构造器私有化
-	 */
-	private FileUtil() {
-	}
+public abstract class FileUtil {
 
 	/**
 	 * 以文本方式读文件(文件较小的情况下)

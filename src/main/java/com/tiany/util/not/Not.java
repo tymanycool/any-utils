@@ -4,7 +4,7 @@ import com.tiany.exception.BlankStringException;
 import com.tiany.exception.EnptyStringException;
 import com.tiany.exception.NullStringException;
 
-public class Not {
+public abstract class Not {
    public static void notNull(String str){
        if(str == null){
            throw new NullStringException("字符串不能为null,请检查");
