@@ -2,6 +2,7 @@ package com.tiany.util;
 
 import com.tiany.inf.Condition;
 import com.tiany.util.not.Not;
+import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.StringTokenizer;
@@ -10,6 +11,8 @@ import java.util.StringTokenizer;
  * 字符串工具类
  *
  * @author tianyao
+ * @version 1.0
+ * @since 1.0
  */
 public abstract class StringUtil extends StringUtils {
 
@@ -750,5 +753,23 @@ public abstract class StringUtil extends StringUtils {
             sb.append(str.charAt(i));
         }
         return sb.toString();
+    }
+
+    /**
+     * 字符串转义
+     * @param str
+     * @return
+     */
+    public static String escape(String str){
+        return StringEscapeUtils.escapeJava(str);
+    }
+
+    /**
+     * 字符串不转义
+     * @param str
+     * @return
+     */
+    public static String unescape(String str){
+        return StringEscapeUtils.unescapeJava(str);
     }
 }

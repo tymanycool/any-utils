@@ -6,6 +6,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.lang.reflect.*;
+import java.math.BigDecimal;
+import java.math.BigInteger;
+import java.util.Date;
 
 
 /**
@@ -366,5 +369,21 @@ public abstract class ReflectUtil {
         Method method = ref.getClass().getMethod(methodName, arrClass);
         result = method.invoke(ref, methodParams);
         return result;
+    }
+
+    /**
+     * 是否是基本的类型
+     * @param type
+     * @return
+     */
+    public static boolean isBasicType(Class<?> type){
+        if(type.toString().equals(String.class.toString().toString())||type.toString().equals(Integer.class.toString()) || type.toString().equals(Boolean.class.toString())|| type.toString().equals(Double.class.toString()) ||
+                type.toString().equals(Float.class.toString()) || type.toString().equals(Byte.class.toString()) || type.toString().equals(Character.class.toString()) || type.toString().equals(Long.class.toString())||
+                type.toString().equals(Short.class.toString()) || type.toString().equals(BigInteger.class.toString()) || type.toString().equals(BigDecimal.class.toString()) || type.toString().equals(Date.class.toString())||
+                type.toString().equals(int.class.toString())||type.toString().equals(boolean.class.toString())||type.toString().equals(double.class.toString())||type.toString().equals(float.class.toString())||
+                type.toString().equals(byte.class.toString())||type.toString().equals(char.class.toString())||type.toString().equals(long.class.toString())||type.toString().equals(short.class.toString())){
+            return true;
+        }
+        return false;
     }
 }
