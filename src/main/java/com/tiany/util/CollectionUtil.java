@@ -3,6 +3,7 @@ package com.tiany.util;
 import com.tiany.inf.Condition;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public abstract class CollectionUtil {
@@ -67,6 +68,38 @@ public abstract class CollectionUtil {
             ret.add(sublist);
         }
         return ret;
+    }
 
+    /**
+     * 以 conjunction 为分隔符将集合转换为字符串
+     *
+     * @param <T> 被处理的集合
+     * @param collection 集合
+     * @param conjunction 分隔符
+     * @return 连接后的字符串
+     */
+    public static <T> String join(Iterable<T> collection, String conjunction) {
+        StringBuilder sb = new StringBuilder();
+        boolean isFirst = true;
+        for (T item : collection) {
+            if (isFirst) {
+                isFirst = false;
+            } else {
+                sb.append(conjunction);
+            }
+            sb.append(item);
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 新建一个ArrayList
+     * @param <T> 参数对象
+     * @param values 参数
+     * @return ArrayList 对象
+     */
+    @SafeVarargs
+    public static <T> ArrayList<T> newArrayList(T... values) {
+        return new ArrayList<T>(Arrays.asList(values));
     }
 }
