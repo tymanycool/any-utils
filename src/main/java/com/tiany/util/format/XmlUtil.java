@@ -1,5 +1,6 @@
 package com.tiany.util.format;
 
+import com.tiany.util.ReflectUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -9,15 +10,16 @@ import javax.xml.bind.Marshaller;
 import java.beans.PropertyDescriptor;
 import java.io.StringWriter;
 import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * xml工具
+ * @author tianyao
+ * @version 1.0
  */
-public class XmlUtil {
+public abstract class XmlUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(XmlUtil.class);
 
@@ -39,7 +41,7 @@ public class XmlUtil {
             // 将对象转换成输出流形式的xml
             marshaller.marshal(obj, sw);
         } catch (JAXBException e) {
-            e.printStackTrace();
+            logger.error("object转换xml失败...",e);
         }
         return sw.toString();
     }
@@ -47,15 +49,15 @@ public class XmlUtil {
     /**
      * 将实体bean转换成xmlStr
      *
-     * @param obj
+     * @param bean
      * @return xml字符串类型
      */
-    public static <T> String bean2Xml(T obj) {
+    public static String bean2Xml(Object bean) {
         try {
-            return convertXml(obj, obj.getClass());
+            return bean2Xml(bean, bean.getClass());
         } catch (Exception e) {
             e.printStackTrace();
-            System.out.println("转换失败");
+            logger.error("bean转换xml失败...",e);
         }
         return null;
     }
@@ -63,21 +65,27 @@ public class XmlUtil {
     /**
      * 解析实体生成xml格式
      *
-     * @param obj
+     * @param bean
      *            实体对象
-     * @param clas
+     * @param cls
      *            class类型
      * @return xml字符串
      * @throws Exception
      */
-    public static String convertXml(Object obj, Class<?> clas) throws Exception {
-        StringBuffer strbuf = new StringBuffer();
-        Class<?> superClas = clas.getSuperclass();
-        // 是否有具有父类，不包含Object
-        if (superClas != null && !superClas.equals(Object.class)) {
-            strbuf.append(convertXml(obj, superClas));
+    private static String bean2Xml(Object bean, Class<?> cls) throws Exception {
+        if(bean == null){
+            return "";
+        }else if (bean instanceof List){
+            // 如果是list
+            return list2Xml((List)bean,"xml");
         }
-        Field[] fields = clas.getDeclaredFields();
+        StringBuffer strbuf = new StringBuffer();
+        Class<?> superClas = cls.getSuperclass();
+        // 是否有具有父类，不包含Object,List,Map
+        if (superClas != null && !superClas.equals(Object.class)&&!superClas.equals(List.class)&&!superClas.equals(Map.class)) {
+            strbuf.append(bean2Xml(bean, superClas));
+        }
+        Field[] fields = cls.getDeclaredFields();
         Field field;
         // xml节点node
         String fieldXmlNode;
@@ -85,91 +93,100 @@ public class XmlUtil {
         Object fieldXmlVal;
         for (int i = 0; i < fields.length; i++) {
             field = fields[i];
-            fieldXmlNode = field.getName().toUpperCase();
-            if ("SERIALVERSIONUID".equalsIgnoreCase(fieldXmlNode)) {
-                continue;
-            }
-            if ("transcode".equalsIgnoreCase(fieldXmlNode)) {
-                continue;
-            }
-            PropertyDescriptor pd = new PropertyDescriptor(field.getName(), obj.getClass());
+            // TODO 控制xml标签的大小写
+            fieldXmlNode = field.getName();
+            PropertyDescriptor pd = new PropertyDescriptor(field.getName(), bean.getClass());
+            // 得到get方法
             Method method = pd.getReadMethod();
 
+            // 存在get方法时
             if (method != null) {
-                fieldXmlVal = method.invoke(obj);
-                if (fieldXmlVal instanceof java.util.List) {
-                    strbuf.append(list2Xml(fieldXmlVal, fieldXmlNode));
-                } else {
-                    strbuf.append("<").append(fieldXmlNode).append(">");
-                    strbuf.append(fieldXmlVal == null ? "" : String.valueOf(fieldXmlVal));
-                    strbuf.append("</").append(fieldXmlNode).append(">");
+                fieldXmlVal = method.invoke(bean);
+                // 属性值为null时不生成xml(返回是"")
+                if(fieldXmlVal == null) {
+                    continue;
                 }
-
+                if (fieldXmlVal instanceof java.util.List) {
+                    // 如果是list类型
+                    List childList = (List) fieldXmlVal;
+                    try {
+                        for (Object child : childList) {
+                            // 基本类型
+                            if(ReflectUtil.isBasicType(child.getClass())){
+                                resolveBasicType(strbuf, fieldXmlNode, child);
+                                continue;
+                            }else if(!(child instanceof List || child instanceof Map)){
+                                // 排除list和map的情况
+                                // 是Entity类型时
+                                resolveEntityType(strbuf, fieldXmlNode, child);
+                            }else{
+                            }
+                        }
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                } else if(ReflectUtil.isBasicType(fieldXmlVal.getClass())){
+                    // 基本类型时
+                    resolveBasicType(strbuf, fieldXmlNode, fieldXmlVal);
+                } else {
+                    // 是Entity类型时
+                    resolveEntityType(strbuf, fieldXmlNode, fieldXmlVal);
+                }
             } else {
+                // 不存在get方法
                 strbuf.append("<").append(fieldXmlNode).append(">");
                 strbuf.append("");
                 strbuf.append("</").append(fieldXmlNode).append(">");
             }
-
         }
         return strbuf.toString();
     }
 
+    private static void resolveBasicType(StringBuffer strbuf, String fieldXmlNode, Object value) {
+        strbuf.append("<").append(fieldXmlNode).append(">");
+        strbuf.append(value == null ? "" : String.valueOf(value));
+        strbuf.append("</").append(fieldXmlNode).append(">");
+    }
+
+    private static void resolveEntityType(StringBuffer strbuf, String fieldXmlNode, Object fieldXmlVal) throws Exception {
+        strbuf.append("<").append(fieldXmlNode).append(">");
+        strbuf.append(bean2Xml(fieldXmlVal, fieldXmlVal.getClass()));
+        strbuf.append("</").append(fieldXmlNode).append(">");
+    }
+
     /**
      * 将list转换成xml标签格式字符串
-     *
-     * @param obj
+     * eg. list2Xml([1,2,3],"MyName"): --> <MyName>1</MyName><MyName>2</MyName><MyName>3</MyName>
+     * @param list
      *            list里的实体对象
      * @param name
      *            字段名称
      * @return String xml格式字符串
      */
-    public static <T> String list2Xml(Object obj, String name) {
-
-        if (null == obj) {
+    public static <T> String list2Xml(List list, String name) {
+        if (null == list) {
             return "";
         }
         StringBuffer strbuf = new StringBuffer();
-        @SuppressWarnings("unchecked")
-        List<T> childList = (ArrayList<T>) obj;
         try {
-            for (T t : childList) {
-                Field[] childProperties = t.getClass().getDeclaredFields();// 获得子类的所有属性
-                strbuf.append("<").append(name).append(">");
-                for (int j = 0; j < childProperties.length; j++) {
-                    String childMethodName = childProperties[j].getName().toUpperCase();
-                    if (!"SERIALVERSIONUID".equals(childMethodName)) {
-                        Method methChild = null;
-                        methChild = t.getClass().getMethod("get" + childMethodName.substring(0, 1).toUpperCase()
-                                + childProperties[j].getName().substring(1));
-
-                        // 为二级节点添加属性，属性值为对应属性的值
-                        strbuf.append("<").append(childProperties[j].getName().toUpperCase()).append(">");
-
-                        if (null == methChild.invoke(t)) {
-                            strbuf.append("");
-                        } else {
-                            strbuf.append(methChild.invoke(t).toString());
-                        }
-
-                        strbuf.append("</").append(childProperties[j].getName().toUpperCase()).append(">");
-                    }
+            for (Object obj : list) {
+                // 基本类型
+                if(ReflectUtil.isBasicType(obj.getClass())){
+                    resolveBasicType(strbuf, name, obj);
+                    continue;
+                } else if(!(obj instanceof List || obj instanceof Map)){
+                    // 排除list和map的情况
+                    // 是Entity类型时
+                    resolveEntityType(strbuf, name, obj);
                 }
-                strbuf.append("</").append(name).append(">");
             }
             return strbuf.toString();
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (IllegalArgumentException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        } catch (NoSuchMethodException e) {
-            e.printStackTrace();
-        } catch (SecurityException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
 
     }
+
+
 }
