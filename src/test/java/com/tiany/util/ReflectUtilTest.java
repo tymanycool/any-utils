@@ -1,5 +1,6 @@
 package com.tiany.util;
 
+import com.tiany.util.reflect.User;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -10,4 +11,7 @@ public class ReflectUtilTest {
         System.out.println("tianyao".getClass().equals(String.class));
     }
 
+    @Test
+    public void test() throws Exception {
+    }
 }

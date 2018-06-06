@@ -22,8 +22,6 @@ public abstract class ReflectUtil {
     
     private static final String GETTER_PREFIX         = "get";
     
-    private static final String CGLIB_CLASS_SEPARATOR = "$$";
-    
     private static Logger logger = LoggerFactory.getLogger(ReflectUtil.class);
     
     /**
@@ -260,20 +258,6 @@ public abstract class ReflectUtil {
         
         return (Class) params[index];
     }
-    
-    public static Class<?> getUserClass(Object instance) {
-        Validate.notNull(instance, "Instance must not be null");
-        Class<?> clazz = instance.getClass();
-        if ((clazz != null) && clazz.getName().contains(CGLIB_CLASS_SEPARATOR)) {
-            Class<?> superClass = clazz.getSuperclass();
-            if ((superClass != null) && !Object.class.equals(superClass)) {
-                return superClass;
-            }
-        }
-        return clazz;
-        
-    }
-    
     /**
      * 将反射时的checked exception转换为unchecked exception.
      */
