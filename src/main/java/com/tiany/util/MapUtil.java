@@ -159,4 +159,20 @@ public abstract class MapUtil {
         }
         return null;
     }
+
+    /**
+     * 将空白字符转换成null统一处理
+     * @param map
+     * @return
+     */
+    public static Map<String,Object> fillBlank2Null(Map<String,Object> map){
+        Iterator iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry<String, Object> entry = (Map.Entry<String, Object>) iterator.next();
+            if (StringUtil.isEmpty(String.valueOf(entry.getValue()))) {
+                entry.setValue(null);
+            }
+        }
+        return map;
+    }
 }
