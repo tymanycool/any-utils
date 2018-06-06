@@ -158,7 +158,7 @@ public abstract class ValidateUtil {
 	 * @param regex 正则
 	 * @return 成立与否
 	 */
-	private static boolean validateByRegex(String input, String regex) {
+	public static boolean validateByRegex(String input, String regex) {
 		if (null == input || input.trim().length() == 0) {
 			return false;
 		}
