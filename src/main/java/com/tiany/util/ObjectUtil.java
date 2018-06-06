@@ -1,6 +1,6 @@
 package com.tiany.util;
 
-public class ObjectUtil {
+public abstract class ObjectUtil {
     /**
      * 数组是否为空
      * @param array
