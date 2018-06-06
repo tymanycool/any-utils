@@ -169,7 +169,7 @@ public abstract class MapUtil {
         Iterator iterator = map.entrySet().iterator();
         while (iterator.hasNext()) {
             Map.Entry<String, Object> entry = (Map.Entry<String, Object>) iterator.next();
-            if (StringUtil.isEmpty(String.valueOf(entry.getValue()))) {
+            if (StringUtil.isEmpty(String.valueOf(entry.getValue()))||"undefined".equals(entry.getValue())) {
                 entry.setValue(null);
             }
         }
