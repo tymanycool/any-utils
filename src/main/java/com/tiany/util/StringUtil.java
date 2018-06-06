@@ -1,7 +1,7 @@
 package com.tiany.util;
 
 import com.tiany.inf.Condition;
-import com.tiany.util.not.Not;
+import com.tiany.util.validate.AssertUtil;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -108,7 +108,7 @@ public abstract class StringUtil extends StringUtils {
      * @param arr
      * @return
      */
-    public static boolean eq_or(String dest, String... arr) {
+    public static boolean equals(String dest, String... arr) {
         for (String s : arr) {
             if (s.equals(dest))
                 return true;
@@ -707,7 +707,7 @@ public abstract class StringUtil extends StringUtils {
      * @return
      */
     public static String getCamelClassName(String str) {
-        Not.notEnpty(str);
+        AssertUtil.notEnpty(str);
         str = str.toLowerCase();
         String[] split = str.split("[-,_]");
         String ret = "";
@@ -726,7 +726,7 @@ public abstract class StringUtil extends StringUtils {
      * @return
      */
     public static String getCamelProperty(String str) {
-        Not.notEnpty(str);
+        AssertUtil.notEnpty(str);
         str = str.toLowerCase();
         String[] split = str.split("[-,_]");
         String ret = split[0];
@@ -771,5 +771,53 @@ public abstract class StringUtil extends StringUtils {
      */
     public static String unescape(String str){
         return StringEscapeUtils.unescapeJava(str);
+    }
+
+    /**
+     * 字符序列有长度
+     * @param str
+     * @return
+     */
+    public static boolean hasLength(CharSequence str) {
+        return str != null && str.length() > 0;
+    }
+
+    /**
+     * 字符串有长度
+     * @param str
+     * @return
+     */
+    public static boolean hasLength(String str) {
+        return hasLength((CharSequence)str);
+    }
+
+    /**
+     * 字符序列有内容
+     * @param str
+     * @return
+     */
+    public static boolean hasText(CharSequence str) {
+        if (!hasLength(str)) {
+            return false;
+        } else {
+            int strLen = str.length();
+
+            for(int i = 0; i < strLen; ++i) {
+                if (!Character.isWhitespace(str.charAt(i))) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+    }
+
+    /**
+     * 字符串有内容
+     * @param str
+     * @return
+     */
+    public static boolean hasText(String str) {
+        return hasText((CharSequence)str);
     }
 }

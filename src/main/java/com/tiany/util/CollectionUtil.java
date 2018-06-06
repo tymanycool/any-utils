@@ -2,9 +2,7 @@ package com.tiany.util;
 
 import com.tiany.inf.Condition;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public abstract class CollectionUtil {
     /**
@@ -101,5 +99,23 @@ public abstract class CollectionUtil {
     @SafeVarargs
     public static <T> ArrayList<T> newArrayList(T... values) {
         return new ArrayList<T>(Arrays.asList(values));
+    }
+
+    /**
+     * 集合是否为空
+     * @param collection
+     * @return
+     */
+    public static boolean isEmpty(Collection<?> collection) {
+        return collection == null || collection.isEmpty();
+    }
+
+    /**
+     * map是否为空
+     * @param map
+     * @return
+     */
+    public static boolean isEmpty(Map<?, ?> map) {
+        return map == null || map.isEmpty();
     }
 }

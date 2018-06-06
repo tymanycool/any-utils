@@ -1,7 +1,6 @@
 package com.tiany.util.validate;
 
 import com.tiany.util.ReflectUtil;
-import org.springframework.util.Assert;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +26,7 @@ public abstract class ValidateUtil {
 	 */
 	public static List<String> validateMust(Object dataObj, String[] propNames,
 			String[] displayNames) {
-		Assert.isTrue(propNames.length == displayNames.length, "参数名与显示名的个数不一致");
+		AssertUtil.isTrue(propNames.length == displayNames.length, "参数名与显示名的个数不一致");
 		List<String> errorList = new ArrayList<String>();
 		for (int i = 0; i < propNames.length; i++) {
 			String propName = propNames[i];

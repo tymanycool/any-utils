@@ -34,11 +34,11 @@
         </dependency>
 
         <!-- SPring 相关配置 -->
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>4.0.0.RELEASE</version>
-        </dependency>
+        </dependency>-->
 
         <!-- FreeMaker配置 -->
         <dependency>
