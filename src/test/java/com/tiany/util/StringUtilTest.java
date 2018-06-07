@@ -18,7 +18,7 @@ public class StringUtilTest {
     @Test
     public void getCamelClassName() throws Exception {
 
-        String test = "last-name_tianyao";
+        String test = "_last-name_tianyao";
         String camelProperty = StringUtil.getCamelClassName(test);
         System.out.println(camelProperty);
 

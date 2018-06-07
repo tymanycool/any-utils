@@ -712,7 +712,9 @@ public abstract class StringUtil extends StringUtils {
         String[] split = str.split("[-,_]");
         String ret = "";
         for (int i = 0; i < split.length; i++) {
-            ret += split[i].substring(0, 1).toUpperCase() + split[i].substring(1);
+            if(isNotEmpty(split[i])) {
+                ret += split[i].substring(0, 1).toUpperCase() + split[i].substring(1);
+            }
         }
         return ret;
     }
@@ -731,7 +733,9 @@ public abstract class StringUtil extends StringUtils {
         String[] split = str.split("[-,_]");
         String ret = split[0];
         for (int i = 1; i < split.length; i++) {
-            ret += split[i].substring(0, 1).toUpperCase() + split[i].substring(1);
+            if(isNotEmpty(split[i])) {
+                ret += split[i].substring(0, 1).toUpperCase() + split[i].substring(1);
+            }
         }
         return ret;
     }
@@ -819,5 +823,31 @@ public abstract class StringUtil extends StringUtils {
      */
     public static boolean hasText(String str) {
         return hasText((CharSequence)str);
+    }
+
+    /**
+     * 字符串以什么开始忽略大小写
+     * @param content
+     * @param prefix
+     * @return
+     */
+    public static boolean startsWithIgnoreCase(String content,String prefix){
+        if(isNotEmpty(content)){
+            return content.toLowerCase().startsWith(prefix.toLowerCase());
+        }
+        return false;
+    }
+
+    /**
+     * 字符串以什么结尾忽略大小写
+     * @param content
+     * @param suffix
+     * @return
+     */
+    public static boolean endsWithIgnoreCase(String content,String suffix){
+        if(isNotEmpty(content)){
+            return content.toLowerCase().startsWith(suffix.toLowerCase());
+        }
+        return false;
     }
 }
