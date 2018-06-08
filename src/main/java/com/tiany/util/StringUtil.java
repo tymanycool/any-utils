@@ -5,6 +5,7 @@ import com.tiany.util.validate.AssertUtil;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.List;
 import java.util.StringTokenizer;
 
 /**
@@ -847,6 +848,24 @@ public abstract class StringUtil extends StringUtils {
     public static boolean endsWithIgnoreCase(String content,String suffix){
         if(isNotEmpty(content)){
             return content.toLowerCase().startsWith(suffix.toLowerCase());
+        }
+        return false;
+    }
+
+    /**
+     * 是否包含忽略大小写
+     * @param list
+     * @param str
+     * @return
+     */
+    public static boolean containsIgnoreCase(List<String> list, String str){
+        AssertUtil.notNull(str);
+        for(String s : list){
+            if(isNotEmpty(s)){
+                if(s.toUpperCase().equals(str.toUpperCase())){
+                    return true;
+                }
+            }
         }
         return false;
     }
