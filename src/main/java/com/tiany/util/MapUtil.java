@@ -21,7 +21,7 @@ public abstract class MapUtil {
     private static final Logger logger = LoggerFactory.getLogger(MapUtil.class);
 
     /**
-     * map中是否包含key(忽略大小写)
+     * 得到map对应得key(忽略大小写)
      * @param map
      * @param key
      * @return
@@ -175,4 +175,5 @@ public abstract class MapUtil {
         }
         return map;
     }
+
 }

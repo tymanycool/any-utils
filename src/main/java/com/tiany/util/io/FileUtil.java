@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public abstract class FileUtil {
+	// 读写文件使用UTF-8编码
+	private static final String ENCODING = "UTF-8";
 
 	/**
 	 * 以文本方式读文件(文件较小的情况下)
@@ -40,7 +42,7 @@ public abstract class FileUtil {
 		char[] charArray = null;
 		BufferedReader br = null;
 		try {
-			br = new BufferedReader(new FileReader(file));
+			br = new BufferedReader(new InputStreamReader(new FileInputStream(file),ENCODING));
 			charArray = new char[(int) length];// 一次性读完...
 			br.read(charArray, 0, charArray.length);
 		} finally {
@@ -82,7 +84,7 @@ public abstract class FileUtil {
 		}
 		BufferedWriter bw = null;
 		try {
-			bw = new BufferedWriter(new FileWriter(file));
+			bw = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(file),ENCODING));
 			if (file.canWrite()) {
 				bw.write(content);
 				bw.flush();
