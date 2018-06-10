@@ -28,7 +28,7 @@ public abstract class StringUtil extends StringUtils {
      * @return
      */
     public static boolean isEmpty(String str) {
-        if (null == str || str.length() <= 0 || "null".equals(str) || str.trim().length() <= 0) {
+        if (null == str || str.length() <= 0 || str.trim().length() <= 0) {
             return true;
         } else {
             return false;
@@ -45,11 +45,7 @@ public abstract class StringUtil extends StringUtils {
      * @return
      */
     public static boolean isNotEmpty(String str) {
-        if (null != str && str.length() > 0 && !"null".equals(str)) {
-            return true;
-        } else {
-            return false;
-        }
+       return !isEmpty(str);
     }
 
     /**

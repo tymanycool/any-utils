@@ -69,6 +69,25 @@ public abstract class CollectionUtil {
     }
 
     /**
+     * 清除list中的空元素(包括null,空白字符组成的元素）
+     *
+     * @param list
+     * @return
+     */
+    public static  List<String> removeEmpty(List<String> list) {
+        List<String> ret = new ArrayList<>();
+        if(isEmpty(list)){
+            return ret;
+        }
+        for(String s: list){
+            if(StringUtil.isNotEmpty(s)){
+                ret.add(s);
+            }
+        }
+        return ret;
+    }
+
+    /**
      * 以 conjunction 为分隔符将集合转换为字符串
      *
      * @param <T> 被处理的集合
@@ -111,11 +130,29 @@ public abstract class CollectionUtil {
     }
 
     /**
+     * 集合是否不为空
+     * @param collection
+     * @return
+     */
+    public static boolean isNotEmpty(Collection<?> collection) {
+        return !isEmpty(collection);
+    }
+
+    /**
      * map是否为空
      * @param map
      * @return
      */
     public static boolean isEmpty(Map<?, ?> map) {
         return map == null || map.isEmpty();
+    }
+
+    /**
+     * map是否不为空
+     * @param map
+     * @return
+     */
+    public static boolean isNotEmpty(Map<?, ?> map) {
+        return !isEmpty(map);
     }
 }
