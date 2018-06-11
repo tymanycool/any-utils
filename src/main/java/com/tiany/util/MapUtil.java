@@ -1,5 +1,6 @@
 package com.tiany.util;
 
+import org.apache.commons.beanutils.BeanUtils;
 import org.dom4j.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,22 +55,42 @@ public abstract class MapUtil {
     }
 
     /**
-     * Bean转换成Map(list类型不做处理，相同的key只保留一个)
+     * 对象转Map(转换本类属性，父类属性，不转换关联字段内的属性)
+     *
+     * @param object 目标对象
+     * @return Map 集合
+     */
+    @SuppressWarnings("unchecked")
+    public static Map<String, String> bean2Map(Object object){
+        Map<String, String> ret = null;
+        try {
+            ret = BeanUtils.describe(object);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ret;
+        }
+        return ret;
+    }
+
+    /**
+     * 对象转换成Map
+     * 1. 转换本类属性，父类属性，不转换关联字段内的属性
+     * 2. list类型不做处理，相同的key只保留一个
      * @param obj
      * @return
      */
-    public static Map<String, Object> bean2Map(Object obj) {
+    public static Map<String, Object> obj2Map(Object obj) {
         if (obj == null) {
             return null;
         }
         try {
-            return  bean2Map(obj,obj.getClass());
+            return  obj2Map(obj,obj.getClass());
         }catch (Exception e) {
             throw new RuntimeException("Bean转换Map出错了!!!",e);
         }
     }
 
-    private static Map bean2Map(Object obj, Class<?> cls) throws Exception{
+    private static Map obj2Map(Object obj, Class<?> cls) throws Exception{
         if (obj == null) {
             return null;
         }
@@ -77,7 +98,7 @@ public abstract class MapUtil {
         Class<?> superClas = cls.getSuperclass();
         // 是否有具有父类，不包含Object
         if (superClas != null && !superClas.equals(Object.class)) {
-            Map map = bean2Map(obj, superClas);
+            Map map = obj2Map(obj, superClas);
             if(map != null){
                 retMap.putAll(map);
             }
@@ -102,7 +123,7 @@ public abstract class MapUtil {
                         retMap.put(key, value);
                     }
                 }else {
-                    Map map = bean2Map(value, value.getClass());
+                    Map map = obj2Map(value, value.getClass());
                     if(map != null){
                         retMap.putAll(map);
                     }

@@ -21,8 +21,7 @@ public abstract class StringUtil extends StringUtils {
      * 判断一个字符串是否为空
      * 1.如果对象str==null 则为空
      * 2.如果字符串长度 小于1 ，str.length()<1 则为空
-     * 3.如果字符串 为 "null" ,则为空
-     * 4.如果字符串为"  ",含有空格，则为空
+     * 3.如果字符串为"  ",含有空格，则为空
      *
      * @param str
      * @return
@@ -36,11 +35,7 @@ public abstract class StringUtil extends StringUtils {
     }
 
     /**
-     * 判断一个字符串是否为空
-     * 1.如果对象str!=null 则不为空
-     * 2.如果字符串长度 大于0 ，str.length()>0 则不为空
-     * 3.如果字符串 为 "null" ,
-     *
+     * 字符串是否不为空
      * @param str
      * @return
      */

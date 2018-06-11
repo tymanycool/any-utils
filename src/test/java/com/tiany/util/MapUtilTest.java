@@ -7,8 +7,6 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.Assert.*;
-
 public class MapUtilTest {
     @Test
     public void xml2Map() throws Exception {
@@ -48,12 +46,10 @@ public class MapUtilTest {
 
         request.setId(2);
         request.getHeader().setId(3);
+        request.setPid("pid");
 
-        Map<String, Object> stringObjectMap = MapUtil.bean2Map(request);
+        Map<String, Object> stringObjectMap = MapUtil.obj2Map(request);
+        Map<String, String> stringStringMap = MapUtil.bean2Map(request);
         List listHeader =  (List)stringObjectMap.get("listHeader");
-        for(Object o:listHeader){
-            System.out.println(o);
-        }
-        System.out.println(stringObjectMap);
     }
 }
