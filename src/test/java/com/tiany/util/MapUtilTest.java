@@ -4,6 +4,7 @@ import com.tiany.util.format.xml.Header;
 import com.tiany.util.format.xml.Request;
 import org.junit.Test;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -49,7 +50,17 @@ public class MapUtilTest {
         request.setPid("pid");
 
         Map<String, Object> stringObjectMap = MapUtil.obj2Map(request);
-        Map<String, String> stringStringMap = MapUtil.bean2Map(request);
+        Map<String, ? extends Object> stringStringMap = MapUtil.bean2Map(request);
         List listHeader =  (List)stringObjectMap.get("listHeader");
+    }
+
+    @Test
+    public void test() throws Exception {
+        List<String> list = new ArrayList<>();
+        method1(list);
+    }
+
+     public void method1( List<? extends Object> list){
+
     }
 }

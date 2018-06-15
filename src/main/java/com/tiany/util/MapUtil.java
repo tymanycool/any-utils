@@ -114,17 +114,16 @@ public abstract class MapUtil {
                 Method getter = property.getReadMethod();
                 Class<?> propertyType = property.getPropertyType();
                 Object value = getter.invoke(obj);
+                if(value == null){
+                    continue;
+                }
                 if(ReflectUtil.isBasicType(propertyType)){
-                    if(value != null){
-                        retMap.put(key, value);
-                    }
+                    retMap.put(key, value);
                 }else if(value instanceof List){
-                    if(value != null){
-                        retMap.put(key, value);
-                    }
+                    retMap.put(key, value);
                 }else {
                     Map map = obj2Map(value, value.getClass());
-                    if(map != null){
+                    if (map != null) {
                         retMap.putAll(map);
                     }
                 }

@@ -787,7 +787,6 @@ public abstract class DateUtil {
 				return time;
 			}
 		}
-		
-		
+
 	}
 
