@@ -263,8 +263,7 @@ public abstract class FileUtil {
 
 	/**
 	 * 查找一个目录下面符合对应扩展名的文件的集合
-	 * 用法：List<File> list = FileUtils.listFiles(new
-	 * File(str),"md","edf","java");
+	 * 用法：List<File> list = FileUtils.listFiles(new File(str),"md","edf","java");
 	 * 
 	 * @param directory
 	 * @param extensions

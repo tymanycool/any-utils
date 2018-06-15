@@ -11,4 +11,15 @@ public class ValidateUtilTest {
         System.out.println(b);
     }
 
+    @Test
+    public void test(){
+
+    }
+
+    public void test2(){
+
+    }
+    public void test3(){
+
+    }
 }
