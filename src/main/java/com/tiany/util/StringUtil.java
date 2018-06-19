@@ -18,7 +18,7 @@ import java.util.StringTokenizer;
  */
 public abstract class StringUtil extends StringUtils {
 
-    public static final String[] encodes = new String[] { "UTF-8","GBK", "GB2312", "ISO-8859-1", "ISO-8859-2"};
+    private static final String[] encodes = new String[] { "UTF-8","GBK", "GB2312", "ISO-8859-1", "ISO-8859-2"};
 
 
     /**
