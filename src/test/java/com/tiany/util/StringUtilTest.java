@@ -32,4 +32,20 @@ public class StringUtilTest {
         System.out.println(StringUtil.unescape(str));
 
     }
+
+    @Test
+    public void testGetEncodeing() throws Exception {
+        //String str = "5222田耀";
+        String encoding = "gbk";
+        // TODO 测试。。。
+        String str = new String("tianyao??田耀，你的眼睛是那么的冰冷，我用手轻轻触摸，化成了冰，222".getBytes(encoding),encoding);
+        System.out.println(str);
+        String ret = StringUtil.getEncoding(str);
+        System.out.println(ret);
+    }
+
+    @Test
+    public void test() throws Exception {
+        //new String
+    }
 }

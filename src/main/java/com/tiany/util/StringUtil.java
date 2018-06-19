@@ -5,6 +5,7 @@ import com.tiany.util.validate.AssertUtil;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -16,6 +17,9 @@ import java.util.StringTokenizer;
  * @since 1.0
  */
 public abstract class StringUtil extends StringUtils {
+
+    public static final String[] encodes = new String[] { "UTF-8","GBK", "GB2312", "ISO-8859-1", "ISO-8859-2"};
+
 
     /**
      * 判断一个字符串是否为空
@@ -52,9 +56,8 @@ public abstract class StringUtil extends StringUtils {
      */
     public static String getEncoding(String str) {
         if (StringUtils.isEmpty(str)) return str;
-        String[] encodeArr = new String[]{"ISO-8859-1", "GB2312", "GBK", "UTF-8", "UTF-16"};
         try {
-            for (String encode : encodeArr) {
+            for (String encode : encodes) {
                 if (str.equals(new String(str.getBytes(encode), encode))) {
                     return encode;
                 }
@@ -64,6 +67,27 @@ public abstract class StringUtil extends StringUtils {
         }
         return null;
     }
+
+    /**
+     * 将字符串转换成指定编码格式
+     *
+     * @param str
+     * @param encode
+     * @return
+     */
+    public static String transEncoding(String str, String encode) {
+        try {
+            String en = getEncoding(str);
+            if (en == null){
+                return null;
+            }
+            return new String(str.getBytes(en),encode);
+        } catch (UnsupportedEncodingException e) {
+            return null;
+        }
+    }
+
+
 
     /**
      * 此方法将给出的字符串source使用delim划分为单词数组。
