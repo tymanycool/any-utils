@@ -25,6 +25,16 @@ public abstract class FileUtil {
 		return read(file);
 	}
 	/**
+	 * 以文本方式读文件(文件较小的情况下)
+	 *
+	 * @param fileClassPath 文件的类路径 eg. com/tianyao
+	 * @return 返回读到的字符串
+	 */
+	public static String readClassPath(String fileClassPath) throws IOException {
+		File file = getClassPathFile(fileClassPath);
+		return read(file);
+	}
+	/**
 	 * 读取文件的内容以字符串的形式返回
 	 * @param file
 	 * @return
@@ -67,6 +77,60 @@ public abstract class FileUtil {
 		File file = new File(filePath);
 		write(file, content);
 	}
+
+	/**
+	 * 以文本方式写文件(文件较小的情况下)
+	 *
+	 * @param fileClassPath 文件的类路径 eg. com/tianyao
+	 * @param content
+	 *            需要写入文件的的字符串
+	 */
+	public static void writeClassPath(String fileClassPath, String content) throws IOException {
+		File file = getClassPathFile(fileClassPath);
+		write(file, content);
+	}
+
+	/**
+	 * 得到类路径下的一个File对象
+	 * @param fileClassPath
+	 * @return
+	 */
+	public static File getClassPathFile(String fileClassPath) {
+		String path = FileUtil.class.getClassLoader().getResource("").getPath();
+		return new File(path+"/"+fileClassPath);
+	}
+
+	/**
+	 * 得到类路径下的一个InputStream对象
+	 * @param fileClassPath
+	 * @return
+	 */
+	public static InputStream getClassPathInputStream(String fileClassPath) {
+		String path = FileUtil.class.getClassLoader().getResource("").getPath();
+		try {
+			return new FileInputStream(new File(path+"/"+fileClassPath));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	/**
+	 * 得到类路径下的一个OutputStream对象
+	 * @param fileClassPath
+	 * @return
+	 */
+	public static OutputStream getClassPathOutputStream(String fileClassPath) {
+		String path = FileUtil.class.getClassLoader().getResource("").getPath();
+		try {
+			return new FileOutputStream(new File(path+"/"+fileClassPath));
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+
 	/**
 	 * 以字符串的形式写文件
 	 * @param file
