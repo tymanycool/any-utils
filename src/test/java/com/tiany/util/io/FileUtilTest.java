@@ -13,4 +13,10 @@ public class FileUtilTest {
         System.out.println(FileUtil.readClassPath("com/tiany/test2.txt"));
     }
 
+
+    @Test
+    public void deleteAll() throws Exception {
+        boolean ret = FileUtil.deleteAll("C:\\Users\\tiany\\Desktop\\target");
+        System.out.println(ret);
+    }
 }

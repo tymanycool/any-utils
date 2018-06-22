@@ -365,6 +365,43 @@ public abstract class FileUtil {
 	}
 
 	/**
+	 * 删除指定文件夹下所有文件及文件夹(不删除path)
+	 * param path 文件夹完整绝对路径
+	 *
+	 * @param path
+	 * @return
+	 */
+
+	public static boolean deleteAll(String path) {
+		System.out.println(path);
+		boolean ret = false;
+		File file = new File(path);
+		if (!file.exists()) {
+			return ret;
+		}
+		if (!file.isDirectory()) {
+			return ret;
+		}
+		String[] tempList = file.list();
+		File temp = null;
+		for (int i = 0; i < tempList.length; i++) {
+			if (path.endsWith(File.separator)) {
+				temp = new File(path + tempList[i]);
+			} else {
+				temp = new File(path + File.separator + tempList[i]);
+			}
+			if (temp.isFile()) {
+				temp.delete();
+			}
+			if (temp.isDirectory()) {
+				deleteAll(path + "/" + tempList[i]);// 先删除文件夹里面的文件
+				ret = (new File(path + "/" + tempList[i])).delete();
+			}
+		}
+		return ret;
+	}
+
+	/**
 	 * 判断两个文件是否相等
 	 * 
 	 * @param file1
