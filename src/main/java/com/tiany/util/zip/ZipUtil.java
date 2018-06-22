@@ -155,7 +155,7 @@ public class ZipUtil {
             Enumeration<?> entries = zipFile.entries();
             while (entries.hasMoreElements()) {
                 ZipEntry entry = (ZipEntry) entries.nextElement();
-                System.out.println("解压" + entry.getName());
+                logger.debug("解压" + entry.getName());
                 // 如果是文件夹，就创建个文件夹
                 if (entry.isDirectory()) {
                     String dirPath = destDirPath + "/" + entry.getName();
