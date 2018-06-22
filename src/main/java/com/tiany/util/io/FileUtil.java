@@ -365,7 +365,7 @@ public abstract class FileUtil {
 	}
 
 	/**
-	 * 删除指定文件夹下所有文件及文件夹(不删除path)
+	 * 删除指定文件夹下所有文件()
 	 * param path 文件夹完整绝对路径
 	 *
 	 * @param path

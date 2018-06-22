@@ -10,6 +10,12 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
+
+/**
+ * 压缩/解压工具(支持zip,jar)
+ * @author tiany
+ * @version 1.0
+ */
 public class ZipUtil {
 
     private static final Logger logger = LoggerFactory.getLogger(ZipUtil.class);
@@ -51,9 +57,8 @@ public class ZipUtil {
      * 压缩成ZIP 方法2
      * @param srcFiles 需要压缩的文件列表
      * @param out 	        压缩文件输出流
-     * @throws RuntimeException 压缩失败会抛出运行时异常
      */
-    public static void compress(List<File> srcFiles , OutputStream out)throws RuntimeException {
+    public static void compress(List<File> srcFiles , OutputStream out) {
         long start = System.currentTimeMillis();
         ZipOutputStream zos = null ;
         try {
@@ -140,9 +145,8 @@ public class ZipUtil {
      * zip解压
      * @param srcFile        zip源文件
      * @param destDirPath	  解压后的目标文件夹
-     * @throws RuntimeException 解压失败会抛出运行时异常
      */
-    public static void decompress(File srcFile, String destDirPath) throws RuntimeException {
+    public static void decompress(File srcFile, String destDirPath){
         long start = System.currentTimeMillis();
         // 判断源文件是否存在
         if (!srcFile.exists()) {
