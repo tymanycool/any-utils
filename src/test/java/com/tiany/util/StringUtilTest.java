@@ -45,7 +45,8 @@ public class StringUtilTest {
     }
 
     @Test
-    public void test() throws Exception {
+    public void testIsAllNotEmpty() throws Exception {
+        System.out.println(StringUtil.isAllNotEmpty("ttt", "tianyao"));
         //new String
     }
 }

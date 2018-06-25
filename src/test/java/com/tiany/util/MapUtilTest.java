@@ -4,9 +4,7 @@ import com.tiany.util.format.xml.Header;
 import com.tiany.util.format.xml.Request;
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class MapUtilTest {
     @Test
@@ -61,6 +59,25 @@ public class MapUtilTest {
     }
 
      public void method1( List<? extends Object> list){
+
+    }
+
+    @Test
+    public void sort() throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        map.put("a","aaaa");
+        map.put("b","bb");
+        map.put("d","aabbaa");
+        map.put("c","bbb");
+        map.put("s","aaddddaa");
+        map.put("s2","aaddddaa");
+        map.put("s1","aaddddaa");
+        map =MapUtil.sort(map,false);
+        Iterator<Map.Entry<String, Object>> iterator = map.entrySet().iterator();
+
+        while (iterator.hasNext()){
+            System.out.println(iterator.next());
+        }
 
     }
 }

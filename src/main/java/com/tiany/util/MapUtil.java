@@ -74,7 +74,7 @@ public abstract class MapUtil {
 
     /**
      * 对象转换成Map
-     * 1. 转换本类属性，父类属性，不转换关联字段内的属性
+     * 1. 转换本类属性，父类属性，转换关联字段内的属性
      * 2. list类型不做处理，相同的key只保留一个
      * @param obj
      * @return
@@ -130,6 +130,23 @@ public abstract class MapUtil {
             }
         }
         return retMap;
+    }
+
+    /**
+     * 根据map的key进行排序
+     * @param map
+     * @param isAsc 是否升序
+     */
+    public static Map<String,Object> sort(Map<String,? extends Object> map,final boolean isAsc){
+        Map newMap = new TreeMap<>(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                int ret = o1.compareTo(o2);
+                return isAsc?ret:-ret;
+            }
+        });
+        newMap.putAll(map);
+        return newMap;
     }
 
 

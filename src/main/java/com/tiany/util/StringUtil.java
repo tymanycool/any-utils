@@ -47,6 +47,24 @@ public abstract class StringUtil extends StringUtils {
        return !isEmpty(str);
     }
 
+
+    /**
+     * 全部字符串都不为空
+     * @param arr
+     * @return
+     */
+    public static boolean isAllNotEmpty(String...arr) {
+        if(arr == null) {
+            return false;
+        }
+        for (String string : arr) {
+            if(string==null || "".equals(string)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     /**
      * 判断一个字符串的编码格式
      *
