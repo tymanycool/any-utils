@@ -145,4 +145,17 @@ public class ValidateWrapper {
     public String getRegex() {
         return regex;
     }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("ValidateWrapper{");
+        sb.append("key='").append(key).append('\'');
+        sb.append(", displayName='").append(displayName).append('\'');
+        sb.append(", value=").append(value);
+        sb.append(", enums=").append(enums);
+        sb.append(", length='").append(length).append('\'');
+        sb.append(", regex='").append(regex).append('\'');
+        sb.append('}');
+        return sb.toString();
+    }
 }
