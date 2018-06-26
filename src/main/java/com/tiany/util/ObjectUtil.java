@@ -52,6 +52,21 @@ public abstract class ObjectUtil {
     }
 
     /**
+     * 比较对象相等，如果有一个相等则返回ture
+     *
+     * @param dest
+     * @param arr
+     * @return
+     */
+    public static boolean equals(Object dest, Object... arr) {
+        for (Object s : arr) {
+            if (s.equals(dest))
+                return true;
+        }
+        return false;
+    }
+
+    /**
      * serialize
      * (获取对象序列化byte数组)
      *

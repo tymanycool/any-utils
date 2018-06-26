@@ -1,8 +1,11 @@
 package com.tiany.util.validate;
 
+import com.tiany.util.ObjectUtil;
 import com.tiany.util.ReflectUtil;
+import com.tiany.util.StringUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -154,6 +157,48 @@ public abstract class ValidateUtil {
 					String valueStr = value.toString().replace("　", "").trim();
 					if (valueStr.length() == 0) {
 						errorList.add(displayName + "(" + propName + ")是必填项");
+					}
+				}
+			}
+		}
+		return errorList;
+	}
+
+	/**
+	 * 验证必填项,如果不通过,返回List【错误描述信息】
+	 *
+	 * @param wrappers 校验wrappers
+	 * @return errorList 错误集合,每条数据表示一个属性的错误描述信息
+	 */
+	public static List<String> validateMustAndEnums(List<ValidateWrapper> wrappers) {
+		List<String> errorList = new ArrayList<String>();
+		for (int i = 0; i < wrappers.size(); i++) {
+			ValidateWrapper validateWrapper = wrappers.get(i);
+			String propName = validateWrapper.getKey();
+			String displayName = validateWrapper.getDisplayName();
+			Object value = validateWrapper.getValue();
+			if (null == value) {
+				errorList.add(displayName + "(" + validateWrapper.getKey() + ")是必填项");
+			} else {
+				if (value instanceof String) {
+					// 处理全角空格
+					String valueStr = value.toString().replace("　", "").trim();
+					if (valueStr.length() == 0) {
+						errorList.add(displayName + "(" + propName + ")是必填项");
+					}else{
+						Object[] enums = validateWrapper.getEnums();
+						if(enums.length>0){
+							boolean iseq = false;
+							for (Object obj : enums) {
+								if (obj.equals(value)){
+									iseq = true;
+									break;
+								}
+							}
+							if(!iseq){
+								errorList.add(displayName + "(" + propName + ")是必需是("+ Arrays.toString(enums) +")其中一个值");
+							}
+						}
 					}
 				}
 			}
