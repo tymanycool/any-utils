@@ -14,7 +14,10 @@ public class ValidateWrapper {
     // 字段的的值必须在enums的范围内，如果为null则不做校验
     private Object[] enums;
 
-    ValidateWrapper(String key,String displayName,Object value,Object... enums){
+    public ValidateWrapper() {
+    }
+
+    public ValidateWrapper(String key, String displayName, Object value, Object... enums){
         this.key = key;
         this.displayName = displayName;
         this.value = value;
