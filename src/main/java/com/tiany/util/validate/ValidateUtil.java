@@ -170,7 +170,7 @@ public abstract class ValidateUtil {
 	 * @param wrappers 校验wrappers
 	 * @return errorList 错误集合,每条数据表示一个属性的错误描述信息
 	 */
-	public static List<String> validateMustAndEnums(List<ValidateWrapper> wrappers) {
+	public static List<String> validate(List<ValidateWrapper> wrappers) {
 		List<String> errorList = new ArrayList<String>();
 		for (int i = 0; i < wrappers.size(); i++) {
 			ValidateWrapper validateWrapper = wrappers.get(i);
@@ -183,11 +183,15 @@ public abstract class ValidateUtil {
 				if (value instanceof String) {
 					// 处理全角空格
 					String valueStr = value.toString().replace("　", "").trim();
-					if (valueStr.length() == 0) {
-						errorList.add(displayName + "(" + propName + ")是必填项");
-					}else{
-						Object[] enums = validateWrapper.getEnums();
-						if(enums.length>0){
+					String validateType = validateWrapper.getValidateType();
+					if (validateType.equals(ValidateWrapper.VALIDATE_TYPE_MUST)) {
+						if(valueStr.length()==0) {
+							errorList.add(displayName + "(" + propName + ")是必填项");
+						}
+					}else if(validateType.equals(ValidateWrapper.VALIDATE_TYPE_ENUMS)){
+						List enums = validateWrapper.getEnums();
+						// 校验枚举
+						if(enums.size()>0){
 							boolean iseq = false;
 							for (Object obj : enums) {
 								if (obj.equals(value)){
@@ -196,8 +200,38 @@ public abstract class ValidateUtil {
 								}
 							}
 							if(!iseq){
-								errorList.add(displayName + "(" + propName + ")是必需是("+ Arrays.toString(enums) +")其中一个值");
+								errorList.add(displayName + "(" + propName + ")是必需是("+ enums +")其中一个值");
 							}
+						}
+					}else if(validateType.equals(ValidateWrapper.VALIDATE_TYPE_LENGTH)){
+						int length = valueStr.length();
+						// 校验的长度
+						int len = validateWrapper.getLen();
+						if(ValidateWrapper.VALIDATE_TYPE_LENGTH.startsWith(">=")){
+							if(length < len){
+								errorList.add(displayName + "(" + validateWrapper.getKey() + ")是必填项,并且长度为大于等于"+len);
+							}
+						}else if(ValidateWrapper.VALIDATE_TYPE_LENGTH.startsWith("<=")){
+							if(length > len){
+								errorList.add(displayName + "(" + validateWrapper.getKey() + ")是必填项,并且长度为小于等于"+len);
+							}
+						}else if(ValidateWrapper.VALIDATE_TYPE_LENGTH.startsWith(">")){
+							if(length <= len){
+								errorList.add(displayName + "(" + validateWrapper.getKey() + ")是必填项,并且长度为大于"+len);
+							}
+						}else if(ValidateWrapper.VALIDATE_TYPE_LENGTH.startsWith("<")){
+							if(length >= len){
+								errorList.add(displayName + "(" + validateWrapper.getKey() + ")是必填项,并且长度为小于"+len);
+							}
+						}else {
+							if(length != len){
+								errorList.add(displayName + "(" + validateWrapper.getKey() + ")是必填项,并且长度为等于"+len);
+							}
+						}
+					}else if(validateType.equals(ValidateWrapper.VALIDATE_TYPE_REGEX)){
+						String regex = validateWrapper.getRegex();
+						if(!validateByRegex(valueStr, regex)){
+							errorList.add(displayName + "(" + validateWrapper.getKey() + ")是必填项,并且满足正则表达式:"+ regex);
 						}
 					}
 				}
