@@ -76,6 +76,7 @@ public abstract class MapUtil {
      * 对象转换成Map
      * 1. 转换本类属性，父类属性，转换关联字段内的属性
      * 2. list类型不做处理，相同的key只保留一个
+     * 3. 字段的值为null的字段时不会转化成map的key
      * @param obj
      * @return
      */
@@ -86,7 +87,7 @@ public abstract class MapUtil {
         try {
             return  obj2Map(obj,obj.getClass());
         }catch (Exception e) {
-            throw new RuntimeException("Bean转换Map出错了!!!",e);
+            throw new RuntimeException("object转换Map出错了!!!",e);
         }
     }
 
