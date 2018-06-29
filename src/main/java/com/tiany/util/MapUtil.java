@@ -122,6 +122,9 @@ public abstract class MapUtil {
                     retMap.put(key, value);
                 }else if(value instanceof List){
                     retMap.put(key, value);
+                }else if(value instanceof Map){
+                    // 只考虑一层结构
+                    retMap.putAll((Map)value);
                 }else {
                     Map map = obj2Map(value, value.getClass());
                     if (map != null) {
