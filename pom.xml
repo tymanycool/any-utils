@@ -37,11 +37,11 @@
         </dependency>
 
         <!-- SPring 相关配置 -->
-        <!--<dependency>
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
             <version>4.0.0.RELEASE</version>
-        </dependency>-->
+        </dependency>
 
         <!-- FreeMaker配置 -->
         <dependency>
@@ -169,6 +169,21 @@
             <artifactId>commons-beanutils</artifactId>
             <version>${commons-beanutils.version}</version>
         </dependency>
+
+
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib-nodep</artifactId>
+            <version>3.2.5</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
+        </dependency>
+
+
 
     </dependencies>
 

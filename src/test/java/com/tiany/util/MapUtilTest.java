@@ -1,5 +1,7 @@
 package com.tiany.util;
 
+import com.tiany.bean.Person;
+import com.tiany.bean.Son;
 import com.tiany.util.format.xml.Header;
 import com.tiany.util.format.xml.Request;
 import org.junit.Test;
@@ -78,6 +80,42 @@ public class MapUtilTest {
         while (iterator.hasNext()){
             System.out.println(iterator.next());
         }
+
+    }
+
+    @Test
+    public void testGetObject() throws Exception {
+        HashMap<Object, Object> map = new HashMap<>();
+        map.put("tianyao","tianyaovalue");
+        map.put("tianyao2","tianyaovalue");
+        map.put("tianyao3","tianyaovalue");
+        HashMap<Object, Object> map2 = new HashMap<>();
+        map2.put("name","ti");
+        map2.put("name1","ti1");
+        map2.put("name2","ti2");
+        map2.put("name3","ti3");
+        map2.put("name4","ti4");
+        map.put("data",map2);
+
+        Object result = MapUtil.getObject(map, "data");
+        System.out.println(result);
+    }
+
+    @Test
+    public void testMapToBean() throws Exception {
+        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> sonMap = new HashMap<>();
+        map.put("name","tianyao");
+        map.put("age",23);
+        map.put("birthday","1992-12-21");
+        //map.put("lastName","son...");
+        map.put("son",sonMap);
+        sonMap.put("lastName","son...");
+        Person person = new Person();
+        Son son = new Son();
+        person.setSon(son);
+        person = MapUtil.mapToBean(map, person);
+        System.out.println(person);
 
     }
 }
