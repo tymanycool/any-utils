@@ -178,7 +178,6 @@ public abstract class ExcelUtil {
 					j++;
 				}
 			}
-
 		}
 		try {
 			out.flush();

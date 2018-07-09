@@ -10,8 +10,8 @@ public class ZipUtilTest {
     public void compress() throws Exception {
 
         /** 测试压缩方法1  */
-        FileOutputStream fos1 = new FileOutputStream(new File("C:/Users/tiany/Desktop/test-01.zip"));
-        ZipUtil.compress("C:/Users/tiany/Desktop/ibatis-test", fos1,true);
+//        FileOutputStream fos1 = new FileOutputStream(new File("C:/Users/tiany/Desktop/test-01.zip"));
+//        ZipUtil.compress("C:/Users/tiany/Desktop/ibatis-test", fos1,true);
 
         /** 测试压缩方法2  */
 
@@ -21,10 +21,10 @@ public class ZipUtilTest {
 //        ZipUtils.compress(files, fos);
     }
 
-    @Test
-    public void decompress() throws Exception {
-        File file = new File("C:\\Users\\tiany\\Desktop\\Loonframework-DAO-Alpha-0.1.0.jar");
-        ZipUtil.decompress(file,"C:\\Users\\tiany\\Desktop\\test-decompress");
-    }
+//    @Test
+//    public void decompress() throws Exception {
+//        File file = new File("C:\\Users\\tiany\\Desktop\\Loonframework-DAO-Alpha-0.1.0.jar");
+//        ZipUtil.decompress(file,"C:\\Users\\tiany\\Desktop\\test-decompress");
+//    }
 
 }

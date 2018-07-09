@@ -4,6 +4,7 @@ import com.tiany.bean.Person;
 import com.tiany.bean.Son;
 import com.tiany.util.format.xml.Header;
 import com.tiany.util.format.xml.Request;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.*;
@@ -101,6 +102,7 @@ public class MapUtilTest {
         System.out.println(result);
     }
 
+    @Ignore
     @Test
     public void testMapToBean() throws Exception {
         Map<String, Object> map = new HashMap<>();
