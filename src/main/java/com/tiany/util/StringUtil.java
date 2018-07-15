@@ -774,6 +774,29 @@ public abstract class StringUtil extends StringUtils {
     }
 
     /**
+     * 得到属性对应的数据库字段
+     * @param property
+     * @return
+     */
+    public static String getDbField(String property){
+        if(isEmpty(property)){
+            return "";
+        }
+        String ret = "";
+        boolean state = Character.isLowerCase(property.charAt(0));
+        ret += property.charAt(0);
+        for(int i=1;i<property.length();i++){
+            boolean newState = Character.isLowerCase(property.charAt(i));
+            if(newState != state && state){
+                ret += "_";
+            }
+            state = newState;
+            ret += property.charAt(i);
+        }
+        return ret.toLowerCase();
+    }
+
+    /**
      * 截取字符串，从beginIndex开始，直到w.matches返回true,此时的位置为endIndex
      *
      * @param str

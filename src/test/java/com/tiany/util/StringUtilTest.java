@@ -30,7 +30,11 @@ public class StringUtilTest {
         System.out.println(escape);
         String str = "\u7530\u8000\"\t";
         System.out.println(StringUtil.unescape(str));
+    }
 
+    @Test
+    public void getDbField() throws Exception {
+        System.out.println(StringUtil.getDbField("urlYdxlProdSyncCreditResult"));
     }
 
     @Test
