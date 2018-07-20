@@ -347,4 +347,41 @@ public abstract class MapUtil {
         return list;
     }
 
+    /**
+     * 匿名处理
+     * @param map 需要处理的map
+     * @param sensitiveFileds 敏感字段集合
+     * @return
+     */
+    public static Map anonymize(Map map,String ... sensitiveFileds) {
+        Map retMap = new HashMap();
+        List list = Arrays.asList(sensitiveFileds);
+        Iterator iterator = map.entrySet().iterator();
+        while (iterator.hasNext()) {
+            Map.Entry next = (Map.Entry) iterator.next();
+            Object key = next.getKey();
+            Object value = next.getValue();
+            if (!(value instanceof Map)) {
+                if(list.contains(key)) {
+                    if(value instanceof String) {
+                        String v = (String)value;
+                        int length = v.length();
+                        if(length>6) {
+                            retMap.put(key, v.substring(0, 3)+"***"+v.substring(length-2,length));
+                        }else {
+                            retMap.put(key,"******");
+                        }
+                    }else {
+                        retMap.put(key,"******");
+                    }
+                }else {
+                    retMap.put(key,value);
+                }
+            }else {
+                retMap.put(key, anonymize((Map)value,sensitiveFileds));
+            }
+        }
+        return retMap;
+    }
+
 }

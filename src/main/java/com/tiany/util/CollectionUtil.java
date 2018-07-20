@@ -6,10 +6,10 @@ import java.util.*;
 
 public abstract class CollectionUtil {
 
-    public Object[] copy(Object[] src,Condition condition){
-
-        return null;
-    }
+//    public Object[] copy(Object[] src,Condition condition){
+//
+//        return null;
+//    }
     /**
      * 数组arr中是否包含ch
      * @param arr
