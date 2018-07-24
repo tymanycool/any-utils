@@ -6,6 +6,7 @@ import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
 
 import java.io.UnsupportedEncodingException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.StringTokenizer;
 
@@ -813,6 +814,16 @@ public abstract class StringUtil extends StringUtils {
             sb.append(str.charAt(i));
         }
         return sb.toString();
+    }
+
+    public static int lastIndexOf(String str,String...arr){
+        List<String> list = Arrays.asList(arr);
+        for(int i=str.length()-1;i>=0;i--){
+            if(list.contains(""+str.charAt(i))){
+                return i;
+            };
+        }
+        return -1;
     }
 
     /**

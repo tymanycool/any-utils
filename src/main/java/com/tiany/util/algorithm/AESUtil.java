@@ -81,12 +81,4 @@ public class AESUtil{
         return pwd;
     }
 
-
-//    public static void main(String[] args) {
-//        String str = "tianyao";
-//        byte[] encrypt = encrypt(str.getBytes(), "123");
-//        byte[] decrypt = decrypt(encrypt, "123");
-//        System.out.println(new String(decrypt));
-//    }
-
 }

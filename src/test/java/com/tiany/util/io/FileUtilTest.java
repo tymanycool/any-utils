@@ -1,7 +1,8 @@
 package com.tiany.util.io;
 
+import org.junit.Ignore;
 import org.junit.Test;
-
+@Ignore
 public class FileUtilTest {
     @Test
     public void writeClassPath() throws Exception {
