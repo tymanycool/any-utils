@@ -334,22 +334,22 @@ public class RSAUtil {
 
 
 
-	public static void main(String[] args) throws Exception {
-
-		// 签名原文
-		String text = "appId=cloud001&channelShareId=SHARE0001&phone=13828936758&thirdCustId=13828936758&appSecret=10bc3a7b05c2477b9ffbaf334a271f78";
-		
-		// 对原报文进行MD5提取摘要：
-		String md5Result = MD5(text);
-		System.out.println("MD5摘要: " + md5Result);// 记得转为大写
-
-		// 私钥签名
-		String sign = RSAEncode(privateString, md5Result);
-		System.out.println("sign:"+sign);
-		// 私钥签名后的数据
-		String rsaDecode = RSADecode(publicString, sign);
-		// 公钥解密
-		System.out.println("公钥解密: " + rsaDecode);
-	}
+//	public static void main(String[] args) throws Exception {
+//
+//		// 签名原文
+//		String text = "appId=cloud001&channelShareId=SHARE0001&phone=13828936758&thirdCustId=13828936758&appSecret=10bc3a7b05c2477b9ffbaf334a271f78";
+//
+//		// 对原报文进行MD5提取摘要：
+//		String md5Result = MD5(text);
+//		System.out.println("MD5摘要: " + md5Result);// 记得转为大写
+//
+//		// 私钥签名
+//		String sign = RSAEncode(privateString, md5Result);
+//		System.out.println("sign:"+sign);
+//		// 私钥签名后的数据
+//		String rsaDecode = RSADecode(publicString, sign);
+//		// 公钥解密
+//		System.out.println("公钥解密: " + rsaDecode);
+//	}
 
 }

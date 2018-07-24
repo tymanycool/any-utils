@@ -1,4 +1,4 @@
-ï»¿package com.tiany.util.algorithm;
+package com.tiany.util.algorithm;
 
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
@@ -9,23 +9,26 @@ import javax.crypto.IllegalBlockSizeException;
 import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.SecretKeySpec;
 
-public class AESUtil{
+/**
+ * AESËã·¨
+ */
+public class AESUtil {
     /**
-     * åŠ å¯†
+     * ¼ÓÃÜ
      *
-     * @param content  éœ€è¦åŠ å¯†çš„å†…å®¹
-     * @param password åŠ å¯†å¯†ç 
+     * @param content  ĞèÒª¼ÓÃÜµÄÄÚÈİ
+     * @param password ¼ÓÃÜÃÜÂë
      * @return
      */
     public static byte[] encrypt(byte[] content, String password) {
         try {
-            //æ ¹æ®keyæ„é€ ä¸€ä¸ªå¯†é’¥
+            //¸ù¾İkey¹¹ÔìÒ»¸öÃÜÔ¿
             SecretKeySpec key = new SecretKeySpec(generateKey(password), "AES");
-            Cipher cipher = Cipher.getInstance("AES");// åˆ›å»ºå¯†ç å™¨
+            Cipher cipher = Cipher.getInstance("AES");// ´´½¨ÃÜÂëÆ÷
             byte[] byteContent = content;
-            cipher.init(Cipher.ENCRYPT_MODE, key);// åˆå§‹åŒ–
+            cipher.init(Cipher.ENCRYPT_MODE, key);// ³õÊ¼»¯
             byte[] result = cipher.doFinal(byteContent);
-            return result; // åŠ å¯†
+            return result; // ¼ÓÃÜ
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {
@@ -41,20 +44,20 @@ public class AESUtil{
     }
 
     /**
-     * è§£å¯†
+     * ½âÃÜ
      *
-     * @param content  å¾…è§£å¯†å†…å®¹
-     * @param password è§£å¯†å¯†é’¥
+     * @param content  ´ı½âÃÜÄÚÈİ
+     * @param password ½âÃÜÃÜÔ¿
      * @return
      */
     public static byte[] decrypt(byte[] content, String password) {
         try {
             SecretKeySpec key = new SecretKeySpec(generateKey(password), "AES");
 
-            Cipher cipher = Cipher.getInstance("AES");// åˆ›å»ºå¯†ç å™¨
-            cipher.init(Cipher.DECRYPT_MODE, key);// åˆå§‹åŒ–
+            Cipher cipher = Cipher.getInstance("AES");// ´´½¨ÃÜÂëÆ÷
+            cipher.init(Cipher.DECRYPT_MODE, key);// ³õÊ¼»¯
             byte[] result = cipher.doFinal(content);
-            return result; // åŠ å¯†
+            return result; // ¼ÓÃÜ
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         } catch (NoSuchPaddingException e) {

@@ -816,9 +816,31 @@ public abstract class StringUtil extends StringUtils {
         return sb.toString();
     }
 
-    public static int lastIndexOf(String str,String...arr){
-        List<String> list = Arrays.asList(arr);
+    /**
+     * 最后一个find中的任何一个元素
+     * @param str
+     * @param find
+     * @return
+     */
+    public static int lastIndexOf(String str,String...find){
+        List<String> list = Arrays.asList(find);
         for(int i=str.length()-1;i>=0;i--){
+            if(list.contains(""+str.charAt(i))){
+                return i;
+            };
+        }
+        return -1;
+    }
+
+    /**
+     * 第一个find中的任何一个元素
+     * @param str
+     * @param find
+     * @return
+     */
+    public static int indexOf(String str,String...find){
+        List<String> list = Arrays.asList(find);
+        for(int i=0;i<str.length()-1;i++){
             if(list.contains(""+str.charAt(i))){
                 return i;
             };
