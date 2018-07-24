@@ -1,5 +1,6 @@
 package com.tiany.util.format;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.HashMap;
@@ -24,7 +25,7 @@ class User{
         this.age = age;
     }
 }
-
+@Ignore
 public class JsonUtilTest {
     @Test
     public void mapToJson() throws Exception {

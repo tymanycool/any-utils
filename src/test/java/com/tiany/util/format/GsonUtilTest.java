@@ -3,10 +3,12 @@ package com.tiany.util.format;
 import com.tiany.util.format.xml.Header;
 import com.tiany.util.format.xml.Request;
 import com.tiany.util.format.xml.User;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@Ignore
 public class GsonUtilTest {
     @Test
     public void toJsonStr() throws Exception {

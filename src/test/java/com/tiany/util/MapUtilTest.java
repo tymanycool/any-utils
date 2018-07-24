@@ -8,7 +8,7 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.*;
-
+@Ignore
 public class MapUtilTest {
     @Test
     public void xml2Map() throws Exception {

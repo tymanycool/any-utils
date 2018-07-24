@@ -3,12 +3,13 @@ package com.tiany.util.format;
 import com.tiany.util.format.xml.Header;
 import com.tiany.util.format.xml.Request;
 import com.tiany.util.format.xml.User;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.ArrayList;
 import java.util.List;
 
-
+@Ignore
 public class XmlUtilTest {
     @Test
     public void bean2Xml() throws Exception {

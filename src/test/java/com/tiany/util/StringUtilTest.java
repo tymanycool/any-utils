@@ -1,9 +1,11 @@
 package com.tiany.util;
 
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
 
+@Ignore
 public class StringUtilTest {
     @Test
     public void getCamelProperty() throws Exception {
