@@ -5,12 +5,14 @@ import com.google.common.collect.Maps;
 import net.sf.cglib.beans.BeanMap;
 import org.apache.commons.beanutils.BeanUtils;
 import org.dom4j.*;
+import org.dom4j.io.SAXReader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
+import java.io.ByteArrayInputStream;
 import java.lang.reflect.Method;
 import java.util.*;
 
@@ -382,6 +384,92 @@ public abstract class MapUtil {
             }
         }
         return retMap;
+    }
+
+
+    /**
+     * 将domString对象转为Map包含dom的层次结构(map里面嵌套map,list,string)
+     * @param domString
+     * @return
+     */
+    @SuppressWarnings("rawtypes")
+    public static Map<String, Object> dom2Map(String domString){
+        Map<String, Object> map = new HashMap<String, Object>();
+        if(domString == null) {
+            return map;
+        }
+        SAXReader saxReader = new SAXReader();
+        Document doc = null;
+        try {
+            doc = saxReader.read(new ByteArrayInputStream(domString.getBytes()));
+        } catch (DocumentException e) {
+            return map;
+        }
+        Element root = doc.getRootElement();
+        for (Iterator iterator = root.elementIterator(); iterator.hasNext();) {
+            Element e = (Element) iterator.next();
+            //System.out.println(e.getName());
+            List list = e.elements();
+            if(list.size() > 0){
+                map.put(e.getName(), dom2Map(e));
+            }else {
+                map.put(e.getName(), e.getText());
+            }
+        }
+        return map;
+    }
+
+    /**
+     * 将Element对象转为Map
+     * @param e
+     * @return
+     */
+    @SuppressWarnings({ "unchecked", "rawtypes" })
+    public static Map dom2Map(Element e){
+        Map map = new HashMap();
+        List list = e.elements();
+        if(list.size() > 0){
+            for (int i = 0;i < list.size(); i++) {
+                Element iter = (Element) list.get(i);
+                List mapList = new ArrayList();
+                if(iter.elements().size() > 0){
+                    Map m = dom2Map(iter);
+                    if(map.get(iter.getName()) != null){
+                        Object obj = map.get(iter.getName());
+                        if(!obj.getClass().getName().equals("java.util.ArrayList")){
+                            mapList = new ArrayList();
+                            mapList.add(obj);
+                            mapList.add(m);
+                        }
+                        if(obj.getClass().getName().equals("java.util.ArrayList")){
+                            mapList = (List) obj;
+                            mapList.add(m);
+                        }
+                        map.put(iter.getName(), mapList);
+                    }else
+                        map.put(iter.getName(), m);
+                }
+                else{
+                    if(map.get(iter.getName()) != null){
+                        Object obj = map.get(iter.getName());
+                        if(!obj.getClass().getName().equals("java.util.ArrayList")){
+                            mapList = new ArrayList();
+                            mapList.add(obj);
+                            mapList.add(iter.getText());
+                        }
+                        if(obj.getClass().getName().equals("java.util.ArrayList")){
+                            mapList = (List) obj;
+                            mapList.add(iter.getText());
+                        }
+                        map.put(iter.getName(), mapList);
+                    }else
+                        map.put(iter.getName(), iter.getText());
+                }
+            }
+        }else {
+            map.put(e.getName(), e.getText());
+        }
+        return map;
     }
 
 }
