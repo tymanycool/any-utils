@@ -43,7 +43,7 @@ public class SFTPUtil{
     private String host;//服务器连接ip
     private String username;//用户名
     private String password;//密码
-    private int port=22;//端口号
+    private int port;//端口号
     private ChannelSftp sftp = null;
     private Session sshSession = null;
 
