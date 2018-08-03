@@ -49,7 +49,6 @@ public class SFTPUtil {
      */
     public void connect() throws JSchException {
         JSch jsch = new JSch();
-        jsch.getSession(username, host, port);
         sshSession = jsch.getSession(username, host, port);
         if (log.isInfoEnabled()) {
             log.info("sftp   ----> Session created.");
