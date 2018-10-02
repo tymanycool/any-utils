@@ -51,7 +51,7 @@ public class SimilarityUtil {
 
     public static void main(String[] args) {
         String src = "2323hello world!";
-        String tar = "2323hello,world!";
+        String tar = "2323hello, world!";
         System.out.println("sim="+ SimilarityUtil.similarity(src, tar));
     }
 }

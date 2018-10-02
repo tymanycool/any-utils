@@ -9,6 +9,8 @@ import java.lang.reflect.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -366,6 +368,18 @@ public abstract class ReflectUtil {
                 type.toString().equals(Short.class.toString()) || type.toString().equals(BigInteger.class.toString()) || type.toString().equals(BigDecimal.class.toString()) || type.toString().equals(Date.class.toString())||
                 type.toString().equals(int.class.toString())||type.toString().equals(boolean.class.toString())||type.toString().equals(double.class.toString())||type.toString().equals(float.class.toString())||
                 type.toString().equals(byte.class.toString())||type.toString().equals(char.class.toString())||type.toString().equals(long.class.toString())||type.toString().equals(short.class.toString())){
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * 是否是基本的类型
+     * @param obj
+     * @return
+     */
+    public static boolean isBasicType(Object obj){
+        if(obj instanceof  String||obj instanceof  Number || obj instanceof Boolean || obj instanceof Character || obj instanceof java.util.Date|| obj instanceof java.sql.Date ){
             return true;
         }
         return false;
