@@ -1,12 +1,22 @@
 package com.tiany.util.io;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.*;
+import java.net.JarURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.nio.channels.FileChannel;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Enumeration;
 import java.util.List;
+import java.util.jar.JarEntry;
+import java.util.jar.JarFile;
 
 public abstract class FileUtil {
+	private static final Logger logger = LoggerFactory.getLogger(FileUtil.class);
 	// 读写文件使用UTF-8编码
 	private static final String ENCODING = "UTF-8";
 
@@ -91,29 +101,105 @@ public abstract class FileUtil {
 	}
 
 	/**
-	 * 得到类路径下的一个File对象
+	 * 得到类路径下的一个File对象(不包含jar包中的)
 	 * @param fileClassPath
 	 * @return
 	 */
 	public static File getClassPathFile(String fileClassPath) {
-		String path = FileUtil.class.getClassLoader().getResource("").getPath();
-		return new File(path+"/"+fileClassPath);
-	}
+		String path = null;
+		URL resource = ClassLoader.getSystemClassLoader().getResource(fileClassPath);
+		//URL resource = FileUtil.class.getClassLoader().getResource("");
+		if(resource!=null){
+			path = resource.getPath();
+		}else{
+			logger.error("资源加载错误...resource:{}",resource);
+		}
 
+		if(path!=null&&path.startsWith("jar:")){
+			if(logger.isDebugEnabled()){
+				logger.debug("无法读取jar包的资源...");
+			}
+		}else{
+			if(logger.isInfoEnabled()){
+				logger.info("正在加载类路径下的资源...{}/{}",path,fileClassPath);
+			}
+			System.out.println("=========path========"+path);
+		}
+		return new File(resource.getPath());
+	}
+	public static String getClassPathAsString(String fileClassPath){
+		try{
+			return  StreamUtil.streamToString(getClassPathInputStream(fileClassPath));
+		}catch (Exception e){
+			logger.error("读取文件失败",e);
+			return null;
+		}
+	}
 	/**
-	 * 得到类路径下的一个InputStream对象
+	 * 得到类路径下的一个InputStream对象(包含jar包中的)
 	 * @param fileClassPath
 	 * @return
 	 */
 	public static InputStream getClassPathInputStream(String fileClassPath) {
-		String path = FileUtil.class.getClassLoader().getResource("").getPath();
-		try {
-			return new FileInputStream(new File(path+"/"+fileClassPath));
-		} catch (FileNotFoundException e) {
-			e.printStackTrace();
+		String path = FileUtil.class.getClassLoader().getResource(fileClassPath).getPath();
+		if(path!=null&&path.contains(".jar!/")){
+			URL url = FileUtil.class.getClassLoader().getResource(fileClassPath);
+			String jarPath = url.toString().substring(0, url.toString().indexOf("!/") + 2);
+
+			URL jarURL = null;
+			JarURLConnection jarCon = null;
+			JarFile jarFile = null;
+			try {
+				jarURL = new URL(jarPath);
+				jarCon = (JarURLConnection) jarURL.openConnection();
+				jarFile = jarCon.getJarFile();
+			} catch (Exception e) {
+				e.printStackTrace();
+				logger.error("加载jar包配置出错...",e);
+				throw new RuntimeException(e);
+			}
+
+			Enumeration<JarEntry> jarEntrys = jarFile.entries();
+
+			while (jarEntrys.hasMoreElements()) {
+				JarEntry entry = jarEntrys.nextElement();
+				String name = entry.getName();
+				if (logger.isDebugEnabled()){
+					logger.debug("正在查找:{}",name);
+				}
+				if (name.startsWith(fileClassPath) && !entry.isDirectory()) {
+					if (logger.isDebugEnabled()){
+						logger.debug("已经成功找到，并加载:{}",name);
+					}
+					return FileUtil.class.getClassLoader().getResourceAsStream(name);
+				}
+			}
+			return null;
+		}else{
+			try {
+				return new FileInputStream(new File(path) );
+			} catch (IOException e) {
+				logger.debug("无法加载文件...",e);
+				throw new RuntimeException(e);
+			}
 		}
-		return null;
+
 	}
+
+//	/**
+//	 * 得到类路径下的一个InputStream对象
+//	 * @param fileClassPath
+//	 * @return
+//	 */
+//	public static InputStream getClassPathInputStream(String fileClassPath) {
+//		String path = FileUtil.class.getClassLoader().getResource("").getPath();
+//		try {
+//			return new FileInputStream(new File(path+"/"+fileClassPath));
+//		} catch (FileNotFoundException e) {
+//			e.printStackTrace();
+//		}
+//		return null;
+//	}
 
 	/**
 	 * 得到类路径下的一个OutputStream对象

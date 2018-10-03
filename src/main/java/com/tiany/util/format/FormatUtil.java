@@ -8,12 +8,13 @@ public abstract class FormatUtil {
      * @return
      */
     public static String addTab(String str,int tabNum){
+        str = str.replaceAll("\r\n","\n");
         String ret = "";
         String addTabStr ="";
         for(int i=0;i<tabNum;i++){
             addTabStr += "\t";
         }
-        String[] split = str.split("\r\n");
+        String[] split = str.split("[\n]");
         for(String s:split){
             ret += addTabStr + s + "\r\n";
         }
