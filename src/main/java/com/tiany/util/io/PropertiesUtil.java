@@ -6,6 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.*;
+import java.util.Map;
 import java.util.Properties;
 
 public abstract class PropertiesUtil {
@@ -46,6 +47,34 @@ public abstract class PropertiesUtil {
 			Properties pro = new OrderedProperties();
 			pro.load(fis);
 			return pro.getProperty(key);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}finally{
+			if(fis!=null){
+				try {
+					fis.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
+
+	/**
+	 * 加载属性文件（注意不是类路径下）
+	 * @param file
+	 * @return
+	 */
+	public static Map loadProps(File file){
+		FileInputStream fis = null;
+		try {
+			fis = new FileInputStream(file);
+			Properties pro = new OrderedProperties();
+			pro.load(fis);
+			return pro;
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {

@@ -120,10 +120,9 @@ public abstract class FileUtil {
 				logger.debug("无法读取jar包的资源...");
 			}
 		}else{
-			if(logger.isInfoEnabled()){
-				logger.info("正在加载类路径下的资源...{}/{}",path,fileClassPath);
-			}
-			System.out.println("=========path========"+path);
+//			if(logger.isInfoEnabled()){
+//				logger.info("正在加载类路径下的资源...{}/{}",path,fileClassPath);
+//			}
 		}
 		return new File(resource.getPath());
 	}
@@ -164,9 +163,9 @@ public abstract class FileUtil {
 			while (jarEntrys.hasMoreElements()) {
 				JarEntry entry = jarEntrys.nextElement();
 				String name = entry.getName();
-				if (logger.isDebugEnabled()){
-					logger.debug("正在查找:{}",name);
-				}
+//				if (logger.isDebugEnabled()){
+//					logger.debug("正在查找:{}",name);
+//				}
 				if (name.startsWith(fileClassPath) && !entry.isDirectory()) {
 					if (logger.isDebugEnabled()){
 						logger.debug("已经成功找到，并加载:{}",name);

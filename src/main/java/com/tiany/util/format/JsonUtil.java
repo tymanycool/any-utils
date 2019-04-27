@@ -12,6 +12,7 @@ import org.json.XML;
 public abstract class JsonUtil {
     /**
      * 对象转json字符串
+     *
      * @param obj
      * @return
      */
@@ -21,13 +22,31 @@ public abstract class JsonUtil {
             ObjectMapper objectMapper = new ObjectMapper();
             ret = objectMapper.writeValueAsString(obj);
         } catch (JsonProcessingException e) {
-            throw new RuntimeException(e.getMessage(),e);
+            throw new RuntimeException(e.getMessage(), e);
+        }
+        return ret;
+    }
+
+    /**
+     * 对象转json字符串
+     *
+     * @param obj
+     * @return
+     */
+    public static String obj2FormatJson(Object obj) {
+        String ret = null;
+        try {
+            ObjectMapper objectMapper = new ObjectMapper();
+            ret = objectMapper.writerWithDefaultPrettyPrinter().writeValueAsString(obj);
+        } catch (JsonProcessingException e) {
+            throw new RuntimeException(e.getMessage(), e);
         }
         return ret;
     }
 
     /**
      * xml转换json
+     *
      * @param xmlString
      * @return
      */
@@ -38,7 +57,7 @@ public abstract class JsonUtil {
             string = jsonObject.toString(4);
         } catch (JSONException e) {
             e.printStackTrace();
-            throw new RuntimeException(e.getMessage(),e);
+            throw new RuntimeException(e.getMessage(), e);
         }
         return string;
     }

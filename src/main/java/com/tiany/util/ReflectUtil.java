@@ -22,7 +22,7 @@ public abstract class ReflectUtil {
     
     private static final String SETTER_PREFIX         = "set";
     
-    private static final String GETTER_PREFIX         = "get";
+    private static final String GETTER_PREFIX         = "getValue";
     
     private static Logger logger = LoggerFactory.getLogger(ReflectUtil.class);
     

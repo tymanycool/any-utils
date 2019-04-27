@@ -14,8 +14,8 @@ import java.util.regex.Pattern;
  * 用法举例:
  * <code>
  *   Evaluate eval = new Evaluate("-123+9-98.25/2-69.2");
- *   System.out.println(eval.get());//-232.325
- *   System.out.println(eval.get(2));//-232.33
+ *   System.out.println(eval.getValue());//-232.325
+ *   System.out.println(eval.getValue(2));//-232.33
  * </code>
  * </pre>
  * 

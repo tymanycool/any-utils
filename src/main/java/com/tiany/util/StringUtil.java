@@ -21,7 +21,7 @@ import java.util.regex.Pattern;
  */
 public abstract class StringUtil extends StringUtils {
 
-    private static final String[] encodes = new String[] { "UTF-8","GBK", "GB2312", "ISO-8859-1", "ISO-8859-2"};
+    private static final String[] encodes = new String[]{"UTF-8", "GBK", "GB2312", "ISO-8859-1", "ISO-8859-2"};
 
 
     /**
@@ -40,27 +40,46 @@ public abstract class StringUtil extends StringUtils {
         }
     }
 
+    public static String toStringAndTrim(Object obj) {
+        if (obj == null) {
+            return "";
+        }
+        return obj.toString().trim();
+    }
+
+    public static boolean isEmpty(Object obj) {
+        String s = toStringAndTrim(obj);
+        return isEmpty(s);
+    }
+
+    public static boolean isNotEmpty(Object obj) {
+        String s = toStringAndTrim(obj);
+        return !isEmpty(s);
+    }
+
     /**
      * 字符串是否不为空
+     *
      * @param str
      * @return
      */
     public static boolean isNotEmpty(String str) {
-       return !isEmpty(str);
+        return !isEmpty(str);
     }
 
 
     /**
      * 全部字符串都不为空
+     *
      * @param arr
      * @return
      */
-    public static boolean isAllNotEmpty(String...arr) {
-        if(arr == null) {
+    public static boolean isAllNotEmpty(String... arr) {
+        if (arr == null) {
             return false;
         }
         for (String string : arr) {
-            if(string==null || "".equals(string)) {
+            if (string == null || "".equals(string)) {
                 return false;
             }
         }
@@ -98,15 +117,14 @@ public abstract class StringUtil extends StringUtils {
     public static String transEncoding(String str, String encode) {
         try {
             String en = getEncoding(str);
-            if (en == null){
+            if (en == null) {
                 return null;
             }
-            return new String(str.getBytes(en),encode);
+            return new String(str.getBytes(en), encode);
         } catch (UnsupportedEncodingException e) {
             return null;
         }
     }
-
 
 
     /**
@@ -748,7 +766,7 @@ public abstract class StringUtil extends StringUtils {
         String[] split = str.split("[-,_]");
         String ret = "";
         for (int i = 0; i < split.length; i++) {
-            if(isNotEmpty(split[i])) {
+            if (isNotEmpty(split[i])) {
                 ret += split[i].substring(0, 1).toUpperCase() + split[i].substring(1);
             }
         }
@@ -769,7 +787,7 @@ public abstract class StringUtil extends StringUtils {
         String[] split = str.split("[-,_]");
         String ret = split[0];
         for (int i = 1; i < split.length; i++) {
-            if(isNotEmpty(split[i])) {
+            if (isNotEmpty(split[i])) {
                 ret += split[i].substring(0, 1).toUpperCase() + split[i].substring(1);
             }
         }
@@ -778,19 +796,20 @@ public abstract class StringUtil extends StringUtils {
 
     /**
      * 得到属性对应的数据库字段
+     *
      * @param property
      * @return
      */
-    public static String getDbField(String property){
-        if(isEmpty(property)){
+    public static String getDbField(String property) {
+        if (isEmpty(property)) {
             return "";
         }
         String ret = "";
         boolean state = Character.isLowerCase(property.charAt(0));
         ret += property.charAt(0);
-        for(int i=1;i<property.length();i++){
+        for (int i = 1; i < property.length(); i++) {
             boolean newState = Character.isLowerCase(property.charAt(i));
-            if(newState != state && state){
+            if (newState != state && state) {
                 ret += "_";
             }
             state = newState;
@@ -820,56 +839,63 @@ public abstract class StringUtil extends StringUtils {
 
     /**
      * 最后一个find中的任何一个元素
+     *
      * @param str
      * @param find
      * @return
      */
-    public static int lastIndexOf(String str,String...find){
+    public static int lastIndexOf(String str, String... find) {
         List<String> list = Arrays.asList(find);
-        for(int i=str.length()-1;i>=0;i--){
-            if(list.contains(""+str.charAt(i))){
+        for (int i = str.length() - 1; i >= 0; i--) {
+            if (list.contains("" + str.charAt(i))) {
                 return i;
-            };
+            }
+            ;
         }
         return -1;
     }
 
     /**
      * 第一个find中的任何一个元素
+     *
      * @param str
      * @param find
      * @return
      */
-    public static int indexOf(String str,String...find){
+    public static int indexOf(String str, String... find) {
         List<String> list = Arrays.asList(find);
-        for(int i=0;i<str.length()-1;i++){
-            if(list.contains(""+str.charAt(i))){
+        for (int i = 0; i < str.length() - 1; i++) {
+            if (list.contains("" + str.charAt(i))) {
                 return i;
-            };
+            }
+            ;
         }
         return -1;
     }
 
     /**
      * 字符串转义
+     *
      * @param str
      * @return
      */
-    public static String escape(String str){
+    public static String escape(String str) {
         return StringEscapeUtils.escapeJava(str);
     }
 
     /**
      * 字符串不转义
+     *
      * @param str
      * @return
      */
-    public static String unescape(String str){
+    public static String unescape(String str) {
         return StringEscapeUtils.unescapeJava(str);
     }
 
     /**
      * 字符序列有长度
+     *
      * @param str
      * @return
      */
@@ -879,15 +905,17 @@ public abstract class StringUtil extends StringUtils {
 
     /**
      * 字符串有长度
+     *
      * @param str
      * @return
      */
     public static boolean hasLength(String str) {
-        return hasLength((CharSequence)str);
+        return hasLength((CharSequence) str);
     }
 
     /**
      * 字符序列有内容
+     *
      * @param str
      * @return
      */
@@ -897,7 +925,7 @@ public abstract class StringUtil extends StringUtils {
         } else {
             int strLen = str.length();
 
-            for(int i = 0; i < strLen; ++i) {
+            for (int i = 0; i < strLen; ++i) {
                 if (!Character.isWhitespace(str.charAt(i))) {
                     return true;
                 }
@@ -909,21 +937,23 @@ public abstract class StringUtil extends StringUtils {
 
     /**
      * 字符串有内容
+     *
      * @param str
      * @return
      */
     public static boolean hasText(String str) {
-        return hasText((CharSequence)str);
+        return hasText((CharSequence) str);
     }
 
     /**
      * 字符串以什么开始忽略大小写
+     *
      * @param content
      * @param prefix
      * @return
      */
-    public static boolean startsWithIgnoreCase(String content,String prefix){
-        if(isNotEmpty(content)){
+    public static boolean startsWithIgnoreCase(String content, String prefix) {
+        if (isNotEmpty(content)) {
             return content.toLowerCase().startsWith(prefix.toLowerCase());
         }
         return false;
@@ -931,12 +961,13 @@ public abstract class StringUtil extends StringUtils {
 
     /**
      * 字符串以什么结尾忽略大小写
+     *
      * @param content
      * @param suffix
      * @return
      */
-    public static boolean endsWithIgnoreCase(String content,String suffix){
-        if(isNotEmpty(content)){
+    public static boolean endsWithIgnoreCase(String content, String suffix) {
+        if (isNotEmpty(content)) {
             return content.toLowerCase().startsWith(suffix.toLowerCase());
         }
         return false;
@@ -944,15 +975,16 @@ public abstract class StringUtil extends StringUtils {
 
     /**
      * 是否包含忽略大小写
+     *
      * @param list
      * @param str
      * @return
      */
-    public static boolean containsIgnoreCase(List<String> list, String str){
+    public static boolean containsIgnoreCase(List<String> list, String str) {
         AssertUtil.notNull(str);
-        for(String s : list){
-            if(isNotEmpty(s)){
-                if(s.toUpperCase().equals(str.toUpperCase())){
+        for (String s : list) {
+            if (isNotEmpty(s)) {
+                if (s.toUpperCase().equals(str.toUpperCase())) {
                     return true;
                 }
             }

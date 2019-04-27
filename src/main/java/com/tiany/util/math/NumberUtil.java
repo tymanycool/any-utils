@@ -24,6 +24,23 @@ public abstract class NumberUtil {
 
 
     /**
+     * value保留n位小数.<br>
+     * round(3.032,2)==3.03;<br>
+     * round(3.36,0)==3;<br>
+     * round(3.035,2)==3.04;
+     *
+     * @param value
+     *            进行运算的数
+     * @param n
+     *            >=0;为小数点后面的位数
+     * @return 返回value保留n位小数的结果
+     */
+
+    public static String round(double value, int n) {
+        return String.format("%." + n + "f", value);
+    }
+
+    /**
      * double 相加
      * 
      * @param dd
