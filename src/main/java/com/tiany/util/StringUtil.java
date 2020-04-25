@@ -801,20 +801,26 @@ public abstract class StringUtil extends StringUtils {
      * @return
      */
     public static String getDbField(String property) {
-        if (isEmpty(property)) {
-            return "";
-        }
         String ret = "";
         boolean state = Character.isLowerCase(property.charAt(0));
-        ret += property.charAt(0);
-        for (int i = 1; i < property.length(); i++) {
-            boolean newState = Character.isLowerCase(property.charAt(i));
-            if (newState != state && state) {
-                ret += "_";
+        ret = ret + property.charAt(0);
+
+        for (int i = 1; i < property.length(); ++i) {
+            boolean newState;
+            char ch = property.charAt(i);
+            if (!Character.isDigit(ch)) {
+                newState = Character.isLowerCase(ch);
+            } else {
+                newState = state;
             }
+            if (newState != state && state) {
+                ret = ret + "_";
+            }
+
             state = newState;
-            ret += property.charAt(i);
+            ret = ret + property.charAt(i);
         }
+
         return ret.toLowerCase();
     }
 

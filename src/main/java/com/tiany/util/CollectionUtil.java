@@ -5,6 +5,9 @@ import com.tiany.inf.Condition;
 import com.tiany.inf.Iter;
 
 import java.util.*;
+import java.util.regex.MatchResult;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public abstract class CollectionUtil {
 
@@ -44,6 +47,58 @@ public abstract class CollectionUtil {
             }
         }
         return false;
+    }
+
+    /**
+     * list中是否顺序包含words(忽略大小写)
+     *
+     * @param list
+     * @param words
+     * @return
+     */
+    public static boolean orderContainsIgnoreCase(List<String> list, String... words) {
+        if (words == null || words.length == 0) {
+            return false;
+        }
+        String source = "";
+        String regex = "^.*";
+        for (String s : list) {
+            source += s.toUpperCase();
+        }
+        for (String s : words) {
+            regex += s.toUpperCase() + ".*";
+        }
+        regex += "$";
+        return source.matches(regex);
+    }
+
+    public static void main(String[] args) {
+        List<String> list = new ArrayList<>();
+        list.add("create");
+        list.add("create");
+        list.add("tian3");
+        list.add("table");
+        list.add("and");
+        list.add("and");
+        list.add("tian2");
+        list.add("tian3");
+
+        String str = "an678set and me8888";
+
+        String regex = "^.*set.*and.*me.*$";
+
+        Pattern compile = Pattern.compile(regex);
+        Matcher matcher = compile.matcher(str);
+        MatchResult matchResult = matcher.toMatchResult();
+        boolean matches = str.matches(regex);
+
+        int start = matchResult.start();
+
+
+
+       // boolean b = orderContainsIgnoreCase(list, "create","create","and", "table2");
+
+
     }
 
     /**
